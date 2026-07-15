@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waahaa SJ Studio 仕人工作室 | STEAM & Art-Tech 互動科技課程目錄</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        html { scroll-behavior: smooth; }
+        /* 3D 行雲流水水墨畫布 */
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        /* 修正 Canvas 對下方頁面元素的干擾，確保後續所有區塊都在正確的層級上，且不會被遮擋 */
+        section, nav, footer {
+            position: relative;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+    <!-- 1. 導覽列 -->
+    <nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-gray-100">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <!-- 左上角 LOGO 與文字區塊 -->
+            <a href="#" class="flex items-center gap-3 hover:opacity-90 transition">
+                <img src="logo_main.png" alt="Waahaa SJ Studio" class="h-10 object-contain">
+                <div class="flex flex-col">
+                    <span class="text-lg font-black text-black tracking-wider leading-none">Waahaa SJ Studio</span>
+                    <span class="text-xs font-medium text-gray-500 tracking-widest mt-1">仕人工作室</span>
+                </div>
+            </a>
+            <div class="space-x-6 text-sm font-medium">
+                <a href="#about" class="text-gray-600 hover:text-black transition">關於我們</a>
+                <a href="#catalog" class="text-gray-600 hover:text-black transition">課程目錄</a>
+                <a href="#contact" class="bg-black text-white px-4 py-2 rounded-full hover:bg-gray-800 transition border border-black">聯絡我們</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. 主視覺 Banner -->
+    <header class="relative bg-white text-gray-900 py-32 px-4 text-center overflow-hidden flex items-center justify-center min-h-[80vh] border-b border-gray-100">
+        <div id="canvas-container"></div>
+        
+        <div class="max-w-4xl mx-auto relative z-10">
+            <span class="bg-gray-900/5 text-gray-700 border border-gray-900/20 text-xs uppercase tracking-widest px-3 py-1 rounded-full font-semibold backdrop-blur-sm">
+                STEAM COURSE / WORKSHOP
+            </span>
+            <h1 class="text-4xl md:text-6xl font-extrabold mt-6 mb-6 leading-tight tracking-wide text-gray-950">
+                數字轉化藝術，科技融入文化<br>
+                <span class="bg-gradient-to-r from-gray-900 via-gray-700 to-gray-800 bg-clip-text text-transparent">STEAM Art-Tech 互動及AI課程</span>
+            </h1>
+            <p class="text-base md:text-lg text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed font-medium">
+                專為香港學校及大專院校設計。結合專業網頁互動、即時視覺演算與生成式 AI，引導學生親手創作出沉浸式藝術作品，對接未來AI與藝術融合的趨勢。
+            </p>
+            <a href="#catalog" class="bg-black text-white font-bold px-8 py-3 rounded-xl shadow-xl shadow-gray-900/10 hover:bg-gray-800 transition transform hover:-translate-y-0.5 inline-block border border-black">
+                瀏覽課程及工作坊
+            </a>
+        </div>
+    </header>
+
+    <!-- 3. 關於我們 -->
+    <section id="about" class="py-24 max-w-5xl mx-auto px-4 relative z-10">
+        <div class="bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-gray-100 flex flex-col md:flex-row gap-8 items-center">
+            <div class="md:w-1/3 text-center md:text-left">
+                <span class="text-xs font-bold text-gray-400 tracking-widest uppercase">ABOUT US</span>
+                <h2 class="text-3xl font-black text-gray-900 mt-2">關於我們</h2>
+            </div>
+            <div class="md:w-2/3 border-t md:border-t-0 md:border-l border-gray-100 pt-6 md:pt-0 md:pl-8">
+                <p class="text-gray-600 leading-relaxed font-medium">
+                    <strong class="text-black">Waahaa SJ Studio</strong>專營STEAM與ART TECH及視覺設計，教學經驗豐富，曾獲邀於 IVE 及其他機構主辦ART TECH及AI工作坊。我們提供「常規課程與單元體驗」一站式 Art-Tech 方案，結合雲端平台，引導學生掌握 AI 與互動藝術創意，擴闊未來視野。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. 課程目錄 -->
+    <section id="catalog" class="bg-gray-100/60 py-24 px-4 border-t border-b border-gray-200/50 relative z-10">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-black text-gray-900 tracking-wide">常規課程與單元工作坊</h2>
+                <p class="text-gray-500 mt-2 font-medium">結合 STEAM 元素，靈活配合學校課外活動、彈性時間學習</p>
+            </div>
+
+            <!-- 課程網格 -->
+            <div class="grid md:grid-cols-2 gap-8">
+                
+                <!-- 01 TouchDesigner 課程 -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200/60 overflow-hidden flex flex-col justify-between">
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-4xl font-black text-gray-200">01</span>
+                            <span class="bg-black text-white text-xs font-bold px-3 py-1 rounded-full">常規課程 (6堂)</span>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-stone-900 mb-1">Art-Tech 互動藝術課(TouchDesigner)</h3>
+                        <p class="text-sm font-semibold italic text-gray-500 mb-6">「不用寫代碼，用邏輯與美感操控光影」</p>
+                        
+                        <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
+                            <p><strong class="text-stone-900">建議人數：</strong>20 - 35 人</p>
+                            <p><strong class="text-stone-900">每堂時長：</strong>1 - 1.5 小時</p>
+                            <p><strong class="text-stone-900">課程內容：</strong>使用業界即時視覺軟體，教導學生使用「節點」代替繁瑣程式碼，探索 Art-Tech 的無限可行性。</p>
+                            <p><strong class="text-stone-900">課程重點：</strong>深度結合STEAM教育，引導學生將數字轉化為動態藝術，並融入傳統中華文化意象。</p>
+                            <p><strong class="text-stone-900">預期收穫：</strong>掌握即時互動藝術與 AI 軟件的實際應用，親手打造出屬於自己的沉浸式展覽。最後一堂將會為學生舉辦一個小型沉浸式展覽。</p>
+                        </div>
+                    </div>
+                    <div class="px-8 pb-8">
+                        <img src="image01.jpg" alt="Art-Tech 互動藝術課(TouchDesigner)課程相片" class="w-full h-48 object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                    </div>
+                </div>
+
+                <!-- 02 ComfyUI 課程 -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200/60 overflow-hidden flex flex-col justify-between">
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-4xl font-black text-gray-200">02</span>
+                            <span class="bg-stone-900 text-white text-xs font-bold px-3 py-1 rounded-full">常規課程 (6堂)</span>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-stone-900 mb-1">生成式 AI 影像課(ComfyUI)</h3>
+                        <p class="text-sm font-semibold italic text-gray-500 mb-6">「掌控 AI，學會生成式創作」</p>
+                        
+                        <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
+                            <p><strong class="text-stone-900">建議人數：</strong>20 - 35 人</p>
+                            <p><strong class="text-stone-900">每堂時長：</strong>1 - 1.5 小時</p>
+                            <p><strong class="text-stone-900">課程內容：</strong>雲端平台運行，免卻學校電腦硬件配置限制。專注教授 AI 的工作流邏輯。</p>
+                            <p><strong class="text-stone-900">課程重點：</strong>學習精準度的提示詞（Prompts）與邏輯架構，並融合傳統美學與現代藝術（如水墨擴散、國潮視覺）</p>
+                            <p><strong class="text-stone-900">預期收穫：</strong>由淺入深，學會從純文字生成品質插畫，到親手製作出細緻流暢的動態 AI 動畫短片。</p>
+                        </div>
+                    </div>
+                    <div class="px-8 pb-8">
+                        <img src="image02.jpg" alt="生成式 AI 影像課程" class="w-full h-48 object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                    </div>
+                </div>
+
+                <!-- 03 Art-Tech 工作坊 -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200/60 overflow-hidden flex flex-col justify-between">
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-4xl font-black text-gray-200">03</span>
+                            <span class="bg-black text-white text-xs font-bold px-3 py-1 rounded-full">單元工作坊</span>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-stone-900 mb-1">Art-Tech 互動體驗工作坊</h3>
+                        <p class="text-sm font-semibold italic text-gray-500 mb-6">「單元 Art Tech 體驗：光與聲的即時派對」</p>
+                        
+                        <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
+                            <p><strong class="text-stone-900">建議人數：</strong>20 - 40 人</p>
+                            <p><strong class="text-stone-900">工作坊時長：</strong>1.5 小時 (單元體驗)</p>
+                            <p><strong class="text-stone-900">工作坊內容：</strong>單元體驗。專業導師團隊會攜帶完整互動器材親臨學校，搭建現場環境，讓學生即場體驗新媒體藝術。</p>
+                            <p><strong class="text-stone-900">工作坊重點：</strong>主打零基礎、高參與度。學生可進行現場實機操作，親身體會聲音、人體動作如何與現場光影畫面進行即時互動連動。</p>
+                            <p><strong class="text-stone-900">預期收穫：</strong>解構並認識 Art-Tech 的實際應用，啟發對Art-Tech與AI藝術、數碼設計與未來創意藝術的濃厚興趣。</p>
+                        </div>
+                    </div>
+                    <div class="px-8 pb-8">
+                        <img src="image03.jpg" alt="Art-Tech 工作坊相片" class="w-full h-48 object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                    </div>
+                </div>
+
+                <!-- 04 AI 工作坊 -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200/60 overflow-hidden flex flex-col justify-between">
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-4xl font-black text-gray-200">04</span>
+                            <span class="bg-black text-white text-xs font-bold px-3 py-1 rounded-full">單元工作坊</span>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-stone-900 mb-1">AI 互動體驗工作坊</h3>
+                        <p class="text-sm font-semibold italic text-gray-500 mb-6">「使用 Gemini 快速創作你的互動藝術」</p>
+                        
+                        <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
+                            <p><strong class="text-stone-900">建議人數：</strong>20 - 40 人</p>
+                            <p><strong class="text-stone-900">工作坊時長：</strong>1.5 小時 (單元體驗)</p>
+                            <p><strong class="text-stone-900">工作坊內容：</strong> 透過具趣味性的實驗與互動藝術，將深奧的互動藝術概念，使用 AI 轉化成學生能即學即用的創意思維工具。</p>
+                            <p><strong class="text-stone-900">工作坊重點：</strong>打破常規！證明 AI 不只是單純文字和圖像工具，學生更可以將 AI 與視覺硬體聯動，好玩、易上手且充滿成就感。</p>
+                            <p><strong class="text-stone-900">預期收穫：</strong>學會與生成式 AI 進行深度精準對話的思考方式；全面啟發 AI 邏輯思維，將 AI 化為理想的工具。</p>
+                        </div>
+                    </div>
+                    <div class="px-8 pb-8">
+                        <img src="image04.jpg" alt="AI 工作坊相片" class="w-full h-48 object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                    </div>
+                </div>
+
+                <!-- 05 AI 網頁生成與互動設計課 -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200/60 overflow-hidden flex flex-col justify-between">
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-4xl font-black text-gray-200">05</span>
+                            <span class="bg-black text-white text-xs font-bold px-3 py-1 rounded-full">單元工作坊</span>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-stone-900 mb-1">AI 網頁生成與互動設計課</h3>
+                        <p class="text-sm font-semibold italic text-gray-500 mb-6">「用 AI 當作最強工具，毋須基礎寫出專屬網頁」</p>
+                        
+                        <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
+                            <p><strong class="text-stone-900">建議人數：</strong>20 - 40 人</p>
+                            <p><strong class="text-stone-900">課程時長：</strong>1.5 - 2 小時</p>
+                            <p><strong class="text-stone-900">課程內容：</strong>教授學生如何利用大型語言模型（LLM）輔助編程，一步步引導 AI 寫出 HTML、CSS 與 JavaScript 程式碼。</p>
+                            <p><strong class="text-stone-900">課程重點：</strong>著重於「指令工程（Prompt Engineering）」與邏輯拆解，引導學生將天馬行空的創意轉化為清晰的網頁架構與動態互動。</p>
+                            <p><strong class="text-stone-900">預期收穫：</strong>學生可以即堂架構到一個網站，避免繁複的coding，在 AI 協助下架設出個人作品或動態特效網頁，並能部署至 GitHub Pages 即時分享。</p>
+                        </div>
+                    </div>
+                    <div class="px-8 pb-8">
+                        <img src="image05.jpg" alt="AI 網頁生成圖片" class="w-full h-48 object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. 聯絡我們 -->
+    <section id="contact" class="bg-black text-white py-24 pb-16 px-4 relative overflow-hidden z-10">
+        <div class="max-w-xl mx-auto relative z-10">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold tracking-wide">聯絡我們 / 預約體驗</h2>
+                <p class="text-stone-400 mt-2 text-sm">歡迎學校、機構、團體聯絡。我們將儘速與 貴校/公司聯繫並提供詳細企劃書。</p>
+            </div>
+            
+            <form id="contact-form" class="space-y-4 text-gray-900 mb-20 relative z-20">
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" name="name" placeholder="您的姓名 / 職稱" required class="p-3 rounded-lg w-full text-sm bg-white border border-gray-200">
+                    <input type="text" name="company" placeholder="學校 / 機構名稱" required class="p-3 rounded-lg w-full text-sm bg-white border border-gray-200">
+                </div>
+                <input type="email" name="email" placeholder="聯絡電子信箱" required class="p-3 rounded-lg w-full text-sm bg-white border border-gray-200">
+                <input type="tel" name="phone" placeholder="聯絡電話" required class="p-3 rounded-lg w-full text-sm bg-white border border-gray-200">
+                <textarea rows="4" name="message" placeholder="請簡述您的需求（例如：預計對象、級別、預估人數、期望時間等）" class="p-3 rounded-lg w-full text-sm bg-white border border-gray-200"></textarea>
+                
+                <button type="submit" id="submit-btn" class="w-full bg-white text-stone-900 font-bold py-3 rounded-lg hover:bg-stone-200 transition shadow-lg tracking-wider">提交</button>
+            </form>
+            <!-- 聯絡資料 -->
+            <div class="text-center mb-16 -mt-12 relative z-20">
+                <p class="text-stone-400 text-sm">歡迎電郵聯絡我們：</p>
+                <a href="mailto:waahaa.sj@gmail.com" class="text-white hover:text-stone-300 text-base font-semibold tracking-wider mt-2 inline-block transition border-b border-white/20 hover:border-white">
+                    waahaa.sj@gmail.com
+                </a>
+            </div>
+            <!-- 合作機構區塊 -->
+            <div class="border-t border-stone-800 pt-12 text-center">
+                <span class="text-xs uppercase tracking-widest text-stone-500 font-bold block mb-6">COOPERATING ORGANIZATIONS / 合作機構</span>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 items-center justify-items-center max-w-xl mx-auto">
+                    <div class="bg-white p-3 rounded-xl w-full h-14 flex items-center justify-center shadow-sm hover:scale-105 hover:shadow-md transition duration-300">
+                        <img src="logo01.png" alt="合作機構 Logo 1" class="max-h-full max-w-full object-contain">
+                    </div>
+                    <div class="bg-white p-3 rounded-xl w-full h-14 flex items-center justify-center shadow-sm hover:scale-105 hover:shadow-md transition duration-300">
+                        <img src="logo02.png" alt="合作機構 Logo 2" class="max-h-full max-w-full object-contain">
+                    </div>
+                    <div class="bg-white p-3 rounded-xl w-full h-14 flex items-center justify-center shadow-sm hover:scale-105 hover:shadow-md transition duration-300">
+                        <img src="logo03.png" alt="合作機構 Logo 3" class="max-h-full max-w-full object-contain">
+                    </div>
+                    <div class="bg-white p-3 rounded-xl w-full h-14 flex items-center justify-center shadow-sm hover:scale-105 hover:shadow-md transition duration-300">
+                        <img src="logo04.png" alt="合作機構 Logo 4" class="max-h-full max-w-full object-contain">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. 頁尾 -->
+    <footer class="bg-stone-950 text-gray-600 text-center py-8 text-xs border-t border-stone-900 relative z-10">
+        <p>© 2026 Waahaa SJ Studio (仕人工作室). All rights reserved. 網頁由 WebGL Fluid Shader 技術驅動</p>
+    </footer>
+
+    <!-- Three.js 行雲流水 -->
+    <script>
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+        
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.0));
+        container.appendChild(renderer.domElement);
+
+        const vertexShader = `
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = vec4(position, 1.0);
+            }
+        `;
+
+        const fragmentShader = `
+            uniform float u_time;
+            uniform vec2 u_mouse;
+            uniform vec2 u_resolution;
+            varying vec2 vUv;
+
+            vec2 hash(vec2 p) {
+                p = vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)));
+                return -1.0 + 2.0 * fract(sin(p) * 43758.5453123);
+            }
+
+            float noise2d(vec2 p) {
+                vec2 i = floor(p);
+                vec2 f = fract(p);
+                vec2 u = f*f*(3.0-2.0*f);
+                return mix(mix(dot(hash(i + vec2(0.0,0.0)), f - vec2(0.0,0.0)), 
+                               dot(hash(i + vec2(1.0,0.0)), f - vec2(1.0,0.0)), u.x),
+                           mix(dot(hash(i + vec2(0.0,1.0)), f - vec2(0.0,1.0)), 
+                               dot(hash(i + vec2(1.0,1.0)), f - vec2(1.0,1.0)), u.x), u.y);
+            }
+
+            void main() {
+                vec2 uv = vUv;
+                uv.x *= u_resolution.x / u_resolution.y;
+                
+                vec2 motion = vec2(
+                    noise2d(uv * 1.2 + vec2(u_time * 0.08, u_time * 0.05)),
+                    noise2d(uv * 1.2 - vec2(u_time * 0.05, u_time * 0.08))
+                );
+                
+                motion += u_mouse * 0.15;
+
+                float inkDensity = noise2d(uv * 2.0 + motion * 1.5);
+
+                inkDensity = smoothstep(0.0, 0.4, inkDensity);
+
+                vec3 bgColor = vec3(1.0, 1.0, 1.0);
+                vec3 inkColor = vec3(0.02, 0.02, 0.02);
+                
+                vec3 finalColor = mix(bgColor, inkColor, inkDensity * 0.75);
+                gl_FragColor = vec4(finalColor, 1.0);
+            }
+        `;
+
+        const uniforms = {
+            u_time: { value: 0.0 },
+            u_mouse: { value: new THREE.Vector2(0, 0) },
+            u_resolution: { value: new THREE.Vector2(container.clientWidth, container.clientHeight) }
+        };
+
+        const geometry = new THREE.PlaneGeometry(2, 2);
+        const material = new THREE.ShaderMaterial({
+            vertexShader: vertexShader,
+            fragmentShader: fragmentShader,
+            uniforms: uniforms,
+            transparent: true
+        });
+
+        const mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+
+        let mouseX = 0, mouseY = 0;
+        let targetX = 0, targetY = 0;
+
+        window.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        });
+
+        const clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            uniforms.u_time.value = clock.getElapsedTime();
+            
+            targetX += (mouseX - targetX) * 0.06;
+            targetY += (mouseY - targetY) * 0.06;
+            uniforms.u_mouse.value.set(targetX, targetY);
+            
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            renderer.setSize(width, height);
+            uniforms.u_resolution.value.set(width, height);
+        });
+    </script>
+
+    <!-- Google Sheet 傳送 JS 邏輯 -->
+    <script>
+        const form = document.getElementById('contact-form');
+        const submitBtn = document.getElementById('submit-btn');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // 阻止網頁跳轉
+            
+            submitBtn.disabled = true;
+            submitBtn.innerText = '正在傳送資料...';
+
+            const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbyGHmk5ush8lE_nxKGCtUcIDdjVtdFg5BlSBhsHPHnShDfOLbdQTaCVMK_LeZxtTTG4/exec'; 
+
+            const formData = new FormData(form);
+            const urlEncoded = new URLSearchParams(formData).toString();
+
+            fetch(googleScriptUrl, {
+                method: 'POST',
+                mode: 'no-cors', 
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: urlEncoded
+            })
+            .then(() => {
+                alert('已經收到您的留言，我們會盡快聯絡您！');
+                form.reset(); // 清空表單
+                submitBtn.disabled = false;
+                submitBtn.innerText = '提交';
+            })
+            .catch(error => {
+                console.error('Error!', error.message);
+                alert('傳送失敗，請稍後再試，或直接與我們 Email 聯絡。');
+                submitBtn.disabled = false;
+                submitBtn.innerText = '提交';
+            });
+        });
+    </script>
+</body>
+</html>
