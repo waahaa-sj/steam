@@ -290,10 +290,11 @@
                     <img src="logo03.png" alt="合作機構 Logo 3" style="max-height: 100%; max-width: 100%; width: auto; height: auto; object-fit: contain; display: block;">
                 </div>
                 
-                <!-- Logo 4: 淨土薈 (徹底修正) -->
-                <!-- 透過增加 padding-top/bottom (上下內邊距) 並限制圖片最大高度為 80%，強迫神像縮小並留在白框之內 -->
-                <div style="background-color: #fff; border-radius: 12px; padding: 16px 12px; display: flex; align-items: center; justify-content: center; height: 65px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden;">
-                    <img src="logo04.png" alt="合作機構 Logo 4" style="max-height: 80%; max-width: 80%; width: auto; height: auto; object-fit: contain; display: block; transform: scale(0.9);">
+                <!-- Logo 4: 淨土薈 (保留透出效果並完美縮小) -->
+                <!-- 調整：移除 overflow: hidden 讓光環與底部英文字能帥氣地微突出框外，並透過 transform 縮小到 0.85 倍 -->
+                <div style="background-color: #fff; border-radius: 12px; padding: 12px; display: flex; align-items: center; justify-content: center; height: 65px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); position: relative;">
+                    <img src="logo04.png" alt="合作機構 Logo 4" class="object-contain" 
+                         style="max-height: 100%; max-width: 100%; width: auto; height: auto; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%) scale(0.85); transform-origin: bottom center; display: block;">
                 </div>
                 
             </div>
