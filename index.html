@@ -265,7 +265,7 @@
                     waahaa.sj@gmail.com
                 </a>
             </div>
-           <!-- 合作機構區塊開頭 -->
+   <!-- 合作機構區塊開頭 -->
         <div style="width: 100%; max-width: 1200px; margin: 0 auto; padding: 40px 20px; text-align: center; box-sizing: border-box;">
             
             <h3 style="font-size: 13px; font-weight: 700; color: #888; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 24px;">
@@ -277,27 +277,42 @@
                 
                 <!-- Logo 1: VTC -->
                 <div style="background-color: #fff; border-radius: 12px; padding: 8px 12px; display: flex; align-items: center; justify-content: center; height: 65px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden;">
-                    <img src="vtc.png" alt="VTC" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    <img src="logo01.png" alt="VTC" style="max-width: 100%; max-height: 100%; object-fit: contain;">
                 </div>
                 
                 <!-- Logo 2: BE@RBRICK MACAU -->
                 <div style="background-color: #fff; border-radius: 12px; padding: 8px 12px; display: flex; align-items: center; justify-content: center; height: 65px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden;">
-                    <img src="bearbrick.png" alt="BE@RBRICK MACAU" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    <img src="logo02.png" alt="BE@RBRICK MACAU" style="max-width: 100%; max-height: 100%; object-fit: contain;">
                 </div>
                 
                 <!-- Logo 3: 連青·南昌 -->
                 <div style="background-color: #fff; border-radius: 12px; padding: 8px 12px; display: flex; align-items: center; justify-content: center; height: 65px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden;">
-                    <img src="youthlink.png" alt="連青·南昌" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    <img src="logo03.png" alt="連青·南昌" style="max-width: 100%; max-height: 100%; object-fit: contain;">
                 </div>
                 
                 <!-- Logo 4: THE PURE LAND ASSEMBLY 淨土薈 -->
                 <!-- 修正：利用 position: relative 與 object-fit 防止突出的神像圖案吃掉或壓到隔壁的元件 -->
                 <div style="background-color: #fff; border-radius: 12px; padding: 8px 12px; display: flex; align-items: center; justify-content: center; height: 65px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); position: relative;">
-                    <img src="pureland.png" alt="THE PURE LAND ASSEMBLY" style="max-width: 100%; max-height: 125%; object-fit: contain; position: absolute; bottom: 0;">
+                    <img src="logo04.png" alt="THE PURE LAND ASSEMBLY" style="max-width: 100%; max-height: 125%; object-fit: contain; position: absolute; bottom: 0;">
                 </div>
                 
             </div>
         </div>
+
+        <!-- 針對電腦螢幕 (寬度大於 768px) 的自動放大調整樣式 -->
+        <style>
+            @media (min-width: 768px) {
+                #partner-logos-grid {
+                    grid-template-columns: repeat(4, 1fr) !important; /* 電腦版恢復橫排 4 個 */
+                    max-width: 900px !important;
+                    gap: 20px !important;
+                }
+                #partner-logos-grid > div {
+                    height: 90px !important; /* 電腦版格子變大 */
+                    padding: 15px 20px !important;
+                }
+            }
+        </style>
 
         <!-- 針對電腦螢幕 (寬度大於 768px) 的自動放大調整樣式 -->
         <style>
