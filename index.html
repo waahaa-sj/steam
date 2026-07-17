@@ -277,29 +277,29 @@
                 
                 <!-- Logo 1 -->
                 <div style="background-color: #fff; border-radius: 12px; padding: 12px; display: flex; align-items: center; justify-content: center; height: 65px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden;">
-                    <img src="logo01.png" alt="合作機構 Logo 1" class="object-contain" style="max-height: 100%; max-width: 100%; width: auto; height: auto; display: block;">
+                    <img src="logo01.png" alt="合作機構 Logo 1" style="max-height: 100%; max-width: 100%; width: auto; height: auto; object-fit: contain; display: block;">
                 </div>
                 
                 <!-- Logo 2 -->
                 <div style="background-color: #fff; border-radius: 12px; padding: 12px; display: flex; align-items: center; justify-content: center; height: 65px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden;">
-                    <img src="logo02.png" alt="合作機構 Logo 2" class="object-contain" style="max-height: 100%; max-width: 100%; width: auto; height: auto; display: block;">
+                    <img src="logo02.png" alt="合作機構 Logo 2" style="max-height: 100%; max-width: 100%; width: auto; height: auto; object-fit: contain; display: block;">
                 </div>
                 
                 <!-- Logo 3 -->
                 <div style="background-color: #fff; border-radius: 12px; padding: 12px; display: flex; align-items: center; justify-content: center; height: 65px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden;">
-                    <img src="logo03.png" alt="合作機構 Logo 3" class="object-contain" style="max-height: 100%; max-width: 100%; width: auto; height: auto; display: block;">
+                    <img src="logo03.png" alt="合作機構 Logo 3" style="max-height: 100%; max-width: 100%; width: auto; height: auto; object-fit: contain; display: block;">
                 </div>
                 
-                <!-- Logo 4 -->
-                <!-- 調整：微調 height 為 105%，並利用 padding-bottom 留出底部的呼吸空間，讓神像大小與前面幾張達成視覺平衡 -->
-                <div style="background-color: #fff; border-radius: 12px; padding: 12px; display: flex; align-items: center; justify-content: center; height: 65px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); position: relative;">
-                    <img src="logo04.png" alt="合作機構 Logo 4" class="object-contain" style="max-height: 105%; max-width: 90%; width: auto; height: auto; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%);">
+                <!-- Logo 4: 淨土薈 (徹底修正) -->
+                <!-- 透過增加 padding-top/bottom (上下內邊距) 並限制圖片最大高度為 80%，強迫神像縮小並留在白框之內 -->
+                <div style="background-color: #fff; border-radius: 12px; padding: 16px 12px; display: flex; align-items: center; justify-content: center; height: 65px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden;">
+                    <img src="logo04.png" alt="合作機構 Logo 4" style="max-height: 80%; max-width: 80%; width: auto; height: auto; object-fit: contain; display: block; transform: scale(0.9);">
                 </div>
                 
             </div>
         </div>
 
-        <!-- RWD 微調：在電腦版（寬度大於 768px）時將格子放大、排成 4 欄 -->
+        <!-- RWD 微調：在電腦版（寬度大於 768px）時將格子放大 -->
         <style>
             @media (min-width: 768px) {
                 #partner-logos-grid {
@@ -311,11 +311,14 @@
                     height: 90px !important;
                     padding: 15px 20px !important;
                 }
-                /* 電腦版時將第四張圖的比例同步稍微縮小微調 */
+                /* 電腦版時也同步微調第四張圖的大小與間距 */
+                #partner-logos-grid > div:nth-child(4) {
+                    padding: 20px 20px !important;
+                }
                 #partner-logos-grid > div:nth-child(4) > img {
-                    max-height: 110% !important;
+                    max-height: 85% !important;
                     max-width: 85% !important;
-                    bottom: 6px !important;
+                    transform: scale(1) !important;
                 }
             }
         </style>
