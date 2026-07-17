@@ -272,44 +272,44 @@
                 COOPERATING ORGANIZATIONS / 合作機構
             </h3>
             
-            <!-- Logo 容器：手機預設 2 欄 -->
+            <!-- Logo 容器：手機預設 2 欄，電腦自動變 4 欄 -->
             <div id="partner-logos-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; justify-content: center; align-items: center; max-width: 600px; margin: 0 auto;">
                 
-                <!-- Logo 1: VTC -->
-                <div style="background-color: #fff; border-radius: 12px; padding: 8px 12px; display: flex; align-items: center; justify-content: center; height: 65px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden;">
-                    <!-- 修正：將 max-width 改為 width: 100% 防止在 Safari 上被壓縮成 0 寬度 -->
-                    <img src="logo01.png" alt="VTC" style="width: 100%; height: 100%; object-fit: contain; display: block;">
+                <!-- Logo 1 -->
+                <div style="background-color: #fff; border-radius: 12px; padding: 12px; display: flex; align-items: center; justify-content: center; height: 65px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden;">
+                    <!-- 還原成您最初能成功顯示的 class 寫法，僅移除限制高度的 class 確保相容性 -->
+                    <img src="logo01.png" alt="合作機構 Logo 1" class="object-contain" style="max-height: 100%; max-width: 100%; width: auto; height: auto; display: block;">
                 </div>
                 
-                <!-- Logo 2: BE@RBRICK MACAU -->
-                <div style="background-color: #fff; border-radius: 12px; padding: 8px 12px; display: flex; align-items: center; justify-content: center; height: 65px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden;">
-                    <img src="logo02.png" alt="BE@RBRICK MACAU" style="width: 100%; height: 100%; object-fit: contain; display: block;">
+                <!-- Logo 2 -->
+                <div style="background-color: #fff; border-radius: 12px; padding: 12px; display: flex; align-items: center; justify-content: center; height: 65px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden;">
+                    <img src="logo02.png" alt="合作機構 Logo 2" class="object-contain" style="max-height: 100%; max-width: 100%; width: auto; height: auto; display: block;">
                 </div>
                 
-                <!-- Logo 3: 連青·南昌 -->
-                <div style="background-color: #fff; border-radius: 12px; padding: 8px 12px; display: flex; align-items: center; justify-content: center; height: 65px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden;">
-                    <img src="logo03.png" alt="連青·南昌" style="width: 100%; height: 100%; object-fit: contain; display: block;">
+                <!-- Logo 3 -->
+                <div style="background-color: #fff; border-radius: 12px; padding: 12px; display: flex; align-items: center; justify-content: center; height: 65px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden;">
+                    <img src="logo03.png" alt="合作機構 Logo 3" class="object-contain" style="max-height: 100%; max-width: 100%; width: auto; height: auto; display: block;">
                 </div>
                 
-                <!-- Logo 4: THE PURE LAND ASSEMBLY 淨土薈 -->
-                <!-- 修正：神像圖案使用絕對定位居中，並設定具體寬高防止縮小 -->
-                <div style="background-color: #fff; border-radius: 12px; padding: 8px 12px; display: flex; align-items: center; justify-content: center; height: 65px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); position: relative;">
-                    <img src="logo04.png" alt="THE PURE LAND ASSEMBLY" style="width: 100%; height: 120%; object-fit: contain; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);">
+                <!-- Logo 4 -->
+                <!-- 針對第四張特殊 Logo 的防溢出底置定位 -->
+                <div style="background-color: #fff; border-radius: 12px; padding: 12px; display: flex; align-items: center; justify-content: center; height: 65px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); position: relative;">
+                    <img src="logo04.png" alt="合作機構 Logo 4" class="object-contain" style="max-height: 120%; max-width: 100%; width: auto; height: auto; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);">
                 </div>
                 
             </div>
         </div>
 
-        <!-- 針對電腦螢幕 (寬度大於 768px) 的自動放大調整樣式 -->
+        <!-- RWD 微調：在電腦版（寬度大於 768px）時將格子放大、排成 4 欄 -->
         <style>
             @media (min-width: 768px) {
                 #partner-logos-grid {
-                    grid-template-columns: repeat(4, 1fr) !important; /* 電腦版恢復橫排 4 個 */
+                    grid-template-columns: repeat(4, 1fr) !important;
                     max-width: 900px !important;
                     gap: 20px !important;
                 }
                 #partner-logos-grid > div {
-                    height: 90px !important; /* 電腦版格子變大 */
+                    height: 90px !important;
                     padding: 15px 20px !important;
                 }
             }
