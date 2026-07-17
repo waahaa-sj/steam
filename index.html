@@ -277,7 +277,6 @@
                 
                 <!-- Logo 1 -->
                 <div style="background-color: #fff; border-radius: 12px; padding: 12px; display: flex; align-items: center; justify-content: center; height: 65px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden;">
-                    <!-- 還原成您最初能成功顯示的 class 寫法，僅移除限制高度的 class 確保相容性 -->
                     <img src="logo01.png" alt="合作機構 Logo 1" class="object-contain" style="max-height: 100%; max-width: 100%; width: auto; height: auto; display: block;">
                 </div>
                 
@@ -292,9 +291,9 @@
                 </div>
                 
                 <!-- Logo 4 -->
-                <!-- 針對第四張特殊 Logo 的防溢出底置定位 -->
+                <!-- 調整：微調 height 為 105%，並利用 padding-bottom 留出底部的呼吸空間，讓神像大小與前面幾張達成視覺平衡 -->
                 <div style="background-color: #fff; border-radius: 12px; padding: 12px; display: flex; align-items: center; justify-content: center; height: 65px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); position: relative;">
-                    <img src="logo04.png" alt="合作機構 Logo 4" class="object-contain" style="max-height: 120%; max-width: 100%; width: auto; height: auto; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);">
+                    <img src="logo04.png" alt="合作機構 Logo 4" class="object-contain" style="max-height: 105%; max-width: 90%; width: auto; height: auto; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%);">
                 </div>
                 
             </div>
@@ -311,6 +310,12 @@
                 #partner-logos-grid > div {
                     height: 90px !important;
                     padding: 15px 20px !important;
+                }
+                /* 電腦版時將第四張圖的比例同步稍微縮小微調 */
+                #partner-logos-grid > div:nth-child(4) > img {
+                    max-height: 110% !important;
+                    max-width: 85% !important;
+                    bottom: 6px !important;
                 }
             }
         </style>
