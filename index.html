@@ -29,50 +29,28 @@
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans">
 
-   <!-- 1. 導覽列 -->
-    <nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-gray-100" style="width: 100%;">
-        <!-- 使用 inline-style 強制在手機上垂直排列 (flex-direction: column)，並確保寬度 100% -->
-        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center gap-3 md:gap-0" 
-             style="display: flex; flex-direction: column; align-items: center; width: 100%; box-sizing: border-box;">
+    <!-- 1. 導覽列 -->
+    <nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-gray-100 w-full">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0">
             
-            <!-- 左上角 LOGO 與文字區塊 (加入 margin-bottom 避免與下方按鈕太近) -->
-            <a href="#" class="flex items-center gap-3 hover:opacity-90 transition" style="display: flex; align-items: center; margin-bottom: 8px;">
-                <img src="logomain.png" alt="Waahaa SJ Studio" class="h-10 object-contain" style="height: 40px; width: auto;">
-                <div class="flex flex-col" style="display: flex; flex-direction: column; text-align: left;">
-                    <span class="text-lg font-black text-black tracking-wider leading-none" style="font-size: 18px; font-weight: 900; line-height: 1.1;">Waahaa SJ Studio</span>
-                    <span class="text-xs font-medium text-gray-500 tracking-widest mt-1" style="font-size: 11px; margin-top: 4px; letter-spacing: 0.1em;">仕人工作室</span>
+            <!-- 左上角 LOGO 與文字區塊 -->
+            <a href="#" class="flex items-center gap-3 hover:opacity-90 transition">
+                <img src="logomain.png" alt="Waahaa SJ Studio" class="h-10 w-auto object-contain">
+                <div class="flex flex-col text-left">
+                    <span class="text-lg font-black text-black tracking-wider leading-none">Waahaa SJ Studio</span>
+                    <span class="text-xs font-medium text-gray-500 tracking-widest mt-1">仕人工作室</span>
                 </div>
             </a>
             
-            <!-- 右側選單：強制橫向排列且絕對不換行 (white-space: nowrap) -->
-            <div class="flex items-center justify-center space-x-4 text-xs md:text-sm font-medium" 
-                 style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 12px; white-space: nowrap; width: 100%;">
-                <a href="#about" class="text-gray-600 hover:text-black transition py-2" style="font-size: 13px; text-decoration: none; color: #4b5563;">關於我們</a>
-                <a href="#catalog" class="text-gray-600 hover:text-black transition py-2" style="font-size: 13px; text-decoration: none; color: #4b5563;">課程目錄</a>
-                <a href="#contact" class="bg-black text-white px-3 py-1.5 md:px-4 md:py-2 rounded-full hover:bg-gray-800 transition border border-black" 
-                   style="font-size: 13px; text-decoration: none; background-color: #000; color: #fff; padding: 6px 12px; border-radius: 9999px;">聯絡我們</a>
+            <!-- 右側選單 -->
+            <div class="flex items-center justify-center gap-4 md:gap-6 text-xs md:text-sm font-medium whitespace-nowrap">
+                <a href="#about" class="text-gray-600 hover:text-black transition py-2">關於我們</a>
+                <a href="#catalog" class="text-gray-600 hover:text-black transition py-2">課程目錄</a>
+                <a href="#contact" class="bg-black text-white px-4 py-2 rounded-full hover:bg-gray-800 transition border border-black">聯絡我們</a>
             </div>
         </div>
-        
-        <!-- 針對電腦螢幕 (寬度大於 768px) 的 RWD 微調樣式 -->
-        <style>
-            @media (min-width: 768px) {
-                nav > div {
-                    flex-direction: row !important;
-                    justify-content: space-between !important;
-                    padding-top: 16px !important;
-                    padding-bottom: 16px !important;
-                }
-                nav > div > a {
-                    margin-bottom: 0 !important;
-                }
-                nav > div > div {
-                    width: auto !important;
-                    gap: 24px !important;
-                }
-            }
-        </style>
     </nav>
+
     <!-- 2. 主視覺 Banner -->
     <header class="relative bg-white text-gray-900 py-32 px-4 text-center overflow-hidden flex items-center justify-center min-h-[80vh] border-b border-gray-100">
         <div id="canvas-container"></div>
@@ -117,7 +95,7 @@
                 <p class="text-gray-500 mt-2 font-medium">結合 STEAM 元素，靈活配合學校課外活動、彈性時間學習</p>
             </div>
 
-            <!-- 課程網格 -->
+            <!-- 課程網格容器 -->
             <div class="grid md:grid-cols-2 gap-8">
                 
                 <!-- 01 TouchDesigner 課程 -->
@@ -240,16 +218,16 @@
                     <div class="p-8">
                         <div class="flex justify-between items-start mb-4">
                             <span class="text-4xl font-black text-gray-200">06</span>
-                            <span class="bg-black text-white text-xs font-bold px-3 py-1 rounded-full">單元工作坊 / 常規課</span>
+                            <span class="bg-black text-white text-xs font-bold px-3 py-1 rounded-full">單元工作坊</span>
                         </div>
                         <h3 class="text-2xl font-extrabold text-stone-900 mb-1">AI 平面設計課</h3>
-                        <p class="text-sm font-semibold italic text-gray-500 mb-6">「從零基礎到極速產出：解鎖生成式 AI 的視覺美學」</p>
+                        <p class="text-sm font-semibold italic text-gray-500 mb-6">「無設計背景：解鎖生成式 AI 的設計美學」</p>
                         
                         <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
                             <p><strong class="text-stone-900">建議人數：</strong>20 - 40 人</p>
-                            <p><strong class="text-stone-900">課程時長：</strong>1.5 - 2 小時</p>
-                            <p><strong class="text-stone-900">課程內容：</strong>結合最前沿生成式 AI 圖像工具，教導學生將創意構想轉化為專業級商業視覺作品。</p>
-                            <p><strong class="text-stone-900">課程重點：</strong>掌握提示詞構圖與風格調控，並融合傳統平面設計理論（如字體搭配、配色與版面佈局），加速設計工作流。</p>
+                            <p><strong class="text-stone-900">課程時長：</strong>1.5 小時</p>
+                            <p><strong class="text-stone-900">課程內容：</strong>結合生成式 AI 圖像工具，教導學生製造商業作品以投身市場。</p>
+                            <p><strong class="text-stone-900">課程重點：</strong>掌握提示詞構圖與風格調控，並融合傳統平面設計理論，減少設計工作時間。</p>
                             <p><strong class="text-stone-900">預期收穫：</strong>學生能掌握商業海報、社群視覺及品牌包裝等的實戰技巧，大幅提升設計效率與視覺表達力。</p>
                         </div>
                     </div>
@@ -258,7 +236,7 @@
                     </div>
                 </div>
 
-            </div>
+            </div><!-- 網格容器結束 -->
         </div>
     </section>
 
@@ -270,7 +248,7 @@
                 <p class="text-stone-400 mt-2 text-sm">歡迎學校、機構、團體聯絡。我們將儘速與 貴校/公司聯繫並提供詳細企劃書。</p>
             </div>
             
-            <form id="contact-form" class="space-y-4 text-gray-900 mb-20 relative z-20">
+            <form id="contact-form" class="space-y-4 text-gray-900 mb-12 relative z-20">
                 <div class="grid grid-cols-2 gap-4">
                     <input type="text" name="name" placeholder="您的姓名 / 職稱" required class="p-3 rounded-lg w-full text-sm bg-white border border-gray-200">
                     <input type="text" name="company" placeholder="學校 / 機構名稱" required class="p-3 rounded-lg w-full text-sm bg-white border border-gray-200">
@@ -281,61 +259,36 @@
                 
                 <button type="submit" id="submit-btn" class="w-full bg-white text-stone-900 font-bold py-3 rounded-lg hover:bg-stone-200 transition shadow-lg tracking-wider">提交</button>
             </form>
+
             <!-- 聯絡資料 -->
-            <div class="text-center mb-16 -mt-12 relative z-20">
+            <div class="text-center mb-16 relative z-20">
                 <p class="text-stone-400 text-sm">歡迎電郵聯絡我們：</p>
                 <a href="mailto:waahaa.sj@gmail.com" class="text-white hover:text-stone-300 text-base font-semibold tracking-wider mt-2 inline-block transition border-b border-white/20 hover:border-white">
                     waahaa.sj@gmail.com
                 </a>
             </div>
 
-            <!-- 合作機構區塊開頭 -->
-            <div style="width: 100%; max-width: 1200px; margin: 0 auto; padding: 40px 20px; text-align: center; box-sizing: border-box;">
-                
-                <h3 style="font-size: 13px; font-weight: 700; color: #888; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 24px;">
+            <!-- 合作機構區塊 -->
+            <div class="w-full max-w-4xl mx-auto pt-8 text-center border-t border-white/10">
+                <h3 class="text-xs font-bold text-gray-400 tracking-widest uppercase mb-6">
                     COOPERATING ORGANIZATIONS / 合作機構
                 </h3>
                 
-                <!-- Logo 容器：手機預設 2 欄，電腦自動變 4 欄 -->
-                <div id="partner-logos-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; justify-content: center; align-items: center; max-width: 600px; margin: 0 auto;">
-                    
-                    <!-- Logo 1 -->
-                    <div style="background-color: #fff; border-radius: 12px; padding: 12px; display: flex; align-items: center; justify-content: center; height: 65px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden;">
-                        <img src="logo01.png" alt="合作機構 Logo 1" style="max-height: 100%; max-width: 100%; width: auto; height: auto; object-fit: contain; display: block;">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 justify-center items-center">
+                    <div class="bg-white rounded-xl p-3 flex items-center justify-center h-20 shadow-sm overflow-hidden">
+                        <img src="logo01.png" alt="合作機構 Logo 1" class="max-h-full max-w-full object-contain">
                     </div>
-                    
-                    <!-- Logo 2 -->
-                    <div style="background-color: #fff; border-radius: 12px; padding: 12px; display: flex; align-items: center; justify-content: center; height: 65px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden;">
-                        <img src="logo02.png" alt="合作機構 Logo 2" style="max-height: 100%; max-width: 100%; width: auto; height: auto; object-fit: contain; display: block;">
+                    <div class="bg-white rounded-xl p-3 flex items-center justify-center h-20 shadow-sm overflow-hidden">
+                        <img src="logo02.png" alt="合作機構 Logo 2" class="max-h-full max-w-full object-contain">
                     </div>
-                    
-                    <!-- Logo 3 -->
-                    <div style="background-color: #fff; border-radius: 12px; padding: 12px; display: flex; align-items: center; justify-content: center; height: 65px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden;">
-                        <img src="logo03.png" alt="合作機構 Logo 3" style="max-height: 100%; max-width: 100%; width: auto; height: auto; object-fit: contain; display: block;">
+                    <div class="bg-white rounded-xl p-3 flex items-center justify-center h-20 shadow-sm overflow-hidden">
+                        <img src="logo03.png" alt="合作機構 Logo 3" class="max-h-full max-w-full object-contain">
                     </div>
-                    
-                    <!-- Logo 4: 淨土薈 (修正置中對齊) -->
-                    <div style="background-color: #fff; border-radius: 12px; padding: 12px; display: flex; align-items: center; justify-content: center; height: 65px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden;">
-                        <img src="logo04.png" alt="合作機構 Logo 4" style="max-height: 100%; max-width: 100%; width: auto; height: auto; object-fit: contain; display: block;">
+                    <div class="bg-white rounded-xl p-3 flex items-center justify-center h-20 shadow-sm overflow-hidden">
+                        <img src="logo04.png" alt="合作機構 Logo 4" class="max-h-full max-w-full object-contain">
                     </div>
-                    
                 </div>
             </div>
-
-            <!-- RWD 微調：電腦版（寬度大於 768px）時的佈局優化 -->
-            <style>
-                @media (min-width: 768px) {
-                    #partner-logos-grid {
-                        grid-template-columns: repeat(4, 1fr) !important;
-                        max-width: 900px !important;
-                        gap: 20px !important;
-                    }
-                    #partner-logos-grid > div {
-                        height: 90px !important;
-                        padding: 15px 20px !important;
-                    }
-                }
-            </style>
         </div>
     </section>
 
