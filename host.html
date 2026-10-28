@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waahaa SJ Studio 仕人工作室 | STEAM & Art-Tech 互動科技課程目錄</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        html { scroll-behavior: smooth; }
+        /* 3D 行雲流水水墨畫布 */
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        /* 修正 Canvas 對下方頁面元素的干擾，確保後續所有區塊都在正確的層級上，且不會被遮擋 */
+        section, nav, footer {
+            position: relative;
+            z-index: 10;
+        }
+        /* 課程分類篩選列 */
+        .cat-tab {
+            padding: 8px 22px;
+            border-radius: 9999px;
+            border: 1px solid #d1d5db;
+            background: #fff;
+            color: #4b5563;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .2s ease;
+            line-height: 1.4;
+        }
+        .cat-tab:hover {
+            border-color: #000;
+            color: #000;
+        }
+        .cat-tab.active {
+            background: #000;
+            border-color: #000;
+            color: #fff;
+        }
+        .cat-label {
+            display: inline-block;
+            background: #f3f4f6;
+            color: #374151;
+            border: 1px solid #e5e7eb;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .04em;
+            padding: 3px 10px;
+            border-radius: 9999px;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+<!-- 1. 導覽列 -->
+    <nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-gray-100" style="width: 100%;">
+        <!-- 使用 inline-style 強制在手機上垂直排列 (flex-direction: column)，並確保寬度 100% -->
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center gap-3 md:gap-0" 
+             style="display: flex; flex-direction: column; align-items: center; width: 100%; box-sizing: border-box;">
+            
+            <!-- 左上角 LOGO 與文字區塊 (加入 margin-bottom 避免與下方按鈕太近) -->
+            <a href="#" class="flex items-center gap-3 hover:opacity-90 transition" style="display: flex; align-items: center; margin-bottom: 8px;">
+                <img src="logomain.png" alt="Waahaa SJ Studio" class="h-10 object-contain" style="height: 40px; width: auto;">
+                <div class="flex flex-col" style="display: flex; flex-direction: column; text-align: left;">
+                    <span class="text-lg font-black text-black tracking-wider leading-none" style="font-size: 18px; font-weight: 900; line-height: 1.1;">Waahaa SJ Studio</span>
+                    <span class="text-xs font-medium text-gray-500 tracking-widest mt-1" style="font-size: 11px; margin-top: 4px; letter-spacing: 0.1em;">仕人工作室</span>
+                </div>
+            </a>
+            
+            <!-- 右側選單：強制橫向排列且絕對不換行 (white-space: nowrap) -->
+            <div class="flex items-center justify-center space-x-4 text-xs md:text-sm font-medium" 
+                 style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 12px; white-space: nowrap; width: 100%;">
+                <a href="#about" class="text-gray-600 hover:text-black transition py-2" style="font-size: 13px; text-decoration: none; color: #4b5563;">關於我們</a>
+                <a href="#catalog" class="text-gray-600 hover:text-black transition py-2" style="font-size: 13px; text-decoration: none; color: #4b5563;">課程目錄</a>
+                <a href="#contact" class="bg-black text-white px-3 py-1.5 md:px-4 md:py-2 rounded-full hover:bg-gray-800 transition border border-black" 
+                   style="font-size: 13px; text-decoration: none; background-color: #000; color: #fff; padding: 6px 12px; border-radius: 9999px;">聯絡我們</a>
+            </div>
+        </div>
+        
+        <!-- 針對電腦螢幕 (寬度大於 768px) 的 RWD 微調樣式 -->
+        <style>
+            @media (min-width: 768px) {
+                nav > div {
+                    flex-direction: row !important;
+                    justify-content: space-between !important;
+                    padding-top: 16px !important;
+                    padding-bottom: 16px !important;
+                }
+                nav > div > a {
+                    margin-bottom: 0 !important;
+                }
+                nav > div > div {
+                    width: auto !important;
+                    gap: 24px !important;
+                }
+            }
+        </style>
+    </nav>
+
+    <!-- 2. 主視覺 Banner -->
+    <header class="relative bg-white text-gray-900 py-32 px-4 text-center overflow-hidden flex items-center justify-center min-h-[80vh] border-b border-gray-100">
+        <div id="canvas-container"></div>
+        
+        <div class="max-w-4xl mx-auto relative z-10">
+            <span class="bg-gray-900/5 text-gray-700 border border-gray-900/20 text-xs uppercase tracking-widest px-3 py-1 rounded-full font-semibold backdrop-blur-sm">
+                STEAM COURSE / WORKSHOP
+            </span>
+            <h1 class="text-4xl md:text-6xl font-extrabold mt-6 mb-6 leading-tight tracking-wide text-gray-950">
+                數字轉化藝術，科技融入文化<br>
+                <span class="bg-gradient-to-r from-gray-900 via-gray-700 to-gray-800 bg-clip-text text-transparent">STEAM Art-Tech 互動及AI課程</span>
+            </h1>
+            <p class="text-base md:text-lg text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed font-medium">
+                專為香港學校及大專院校設計。結合專業網頁互動、即時視覺演算與生成式 AI，引導學生親手創作出沉浸式藝術作品，對接未來AI與藝術融合的趨勢。
+            </p>
+            <a href="#catalog" class="bg-black text-white font-bold px-8 py-3 rounded-xl shadow-xl shadow-gray-900/10 hover:bg-gray-800 transition transform hover:-translate-y-0.5 inline-block border border-black">
+                瀏覽課程及工作坊
+            </a>
+        </div>
+    </header>
+
+    <!-- 3. 關於我們 -->
+    <section id="about" class="py-24 max-w-5xl mx-auto px-4 relative z-10">
+        <div class="bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-gray-100 flex flex-col md:flex-row gap-8 items-center">
+            <div class="md:w-1/3 text-center md:text-left">
+                <span class="text-xs font-bold text-gray-400 tracking-widest uppercase">ABOUT US</span>
+                <h2 class="text-3xl font-black text-gray-900 mt-2">關於我們</h2>
+            </div>
+            <div class="md:w-2/3 border-t md:border-t-0 md:border-l border-gray-100 pt-6 md:pt-0 md:pl-8">
+                <p class="text-gray-600 leading-relaxed font-medium">
+                    <strong class="text-black">Waahaa SJ Studio</strong>專營STEAM與ART TECH及視覺設計，教學經驗豐富，曾獲邀於 IVE 及其他機構主辦ART TECH及AI工作坊。我們提供「常規課程與單元體驗」一站式 Art-Tech 方案，結合雲端平台，引導學生掌握 AI 與互動藝術創意，擴闊未來視野。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. 課程目錄 -->
+    <section id="catalog" class="bg-gray-100/60 py-24 px-4 border-t border-b border-gray-200/50 relative z-10">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-black text-gray-900 tracking-wide">常規課程與單元工作坊</h2>
+                <p class="text-gray-500 mt-2 font-medium">結合 STEAM 元素，靈活配合學校課外活動、彈性時間學習</p>
+            </div>
+
+            <!-- 課程分類篩選列（單頁切換，不跳轉） -->
+            <div class="flex flex-wrap justify-center gap-3 mb-14" role="tablist" aria-label="課程分類">
+                <button type="button" class="cat-tab active" data-cat="all">全部</button>
+                <button type="button" class="cat-tab" data-cat="arttech">ART-TECH</button>
+                <button type="button" class="cat-tab" data-cat="ai">AI</button>
+                <button type="button" class="cat-tab" data-cat="metal">金工</button>
+            </div>
+
+            <!-- 課程網格 -->
+            <div class="grid md:grid-cols-2 gap-8" id="course-grid">
+                
+                <!-- 01 TouchDesigner 課程 -->
+                <a href="#course/01" class="bg-white rounded-2xl shadow-sm border border-gray-200/60 overflow-hidden flex flex-col justify-between course-card group hover:shadow-lg hover:-translate-y-1 transition-all duration-300" data-category="arttech">
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-4xl font-black text-gray-200">01</span>
+                            <div class="flex flex-wrap justify-end gap-2">
+                                <span class="cat-label">ART-TECH</span>
+                                <span class="bg-black text-white text-xs font-bold px-3 py-1 rounded-full">常規課程 (6堂)</span>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-stone-900 mb-1">Art-Tech 互動藝術課(TouchDesigner)</h3>
+                        <p class="text-sm font-semibold italic text-gray-500 mb-6">「不用寫代碼，用邏輯與美感操控光影」</p>
+                        
+                        <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
+                            <p><strong class="text-stone-900">建議人數：</strong>20 - 35 人</p>
+                            <p><strong class="text-stone-900">每堂時長：</strong>1 - 1.5 小時</p>
+                            <p><strong class="text-stone-900">課程內容：</strong>使用業界即時視覺軟體，教導學生使用「節點」代替繁瑣程式碼，探索 Art-Tech 的無限可行性。</p>
+                            <p><strong class="text-stone-900">課程重點：</strong>深度結合STEAM教育，引導學生將數字轉化為動態藝術，並融入傳統中華文化意象。</p>
+                            <p><strong class="text-stone-900">預期收穫：</strong>掌握即時互動藝術與 AI 軟件的實際應用，親手打造出屬於自己的沉浸式展覽。最後一堂將會為學生舉辦一個小型沉浸式展覽。</p>
+                        </div>
+                    </div>
+                    <div class="px-8 pb-8">
+                        <img src="image01.jpg" alt="Art-Tech 互動藝術課(TouchDesigner)課程相片" class="w-full h-48 object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                    </div>
+                    <div class="px-8 pb-6">
+                        <span class="text-sm font-bold text-stone-900 inline-flex items-center gap-1 border-b-2 border-stone-900 pb-0.5">查看詳細流程 <span aria-hidden="true">→</span></span>
+                    </div>
+                </a>
+
+                <!-- 02 ComfyUI 課程 -->
+                <a href="#course/02" class="bg-white rounded-2xl shadow-sm border border-gray-200/60 overflow-hidden flex flex-col justify-between course-card group hover:shadow-lg hover:-translate-y-1 transition-all duration-300" data-category="arttech ai">
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-4xl font-black text-gray-200">02</span>
+                            <div class="flex flex-wrap justify-end gap-2">
+                                <span class="cat-label">ART-TECH</span>
+                                <span class="cat-label">AI</span>
+                                <span class="bg-stone-900 text-white text-xs font-bold px-3 py-1 rounded-full">常規課程 (6堂)</span>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-stone-900 mb-1">生成式 AI 影像課(ComfyUI)</h3>
+                        <p class="text-sm font-semibold italic text-gray-500 mb-6">「掌控 AI，學會生成式創作」</p>
+                        
+                        <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
+                            <p><strong class="text-stone-900">建議人數：</strong>20 - 35 人</p>
+                            <p><strong class="text-stone-900">每堂時長：</strong>1 - 1.5 小時</p>
+                            <p><strong class="text-stone-900">課程內容：</strong>雲端平台運行，免卻學校電腦硬件配置限制。專注教授 AI 的工作流邏輯。</p>
+                            <p><strong class="text-stone-900">課程重點：</strong>學習精準度的提示詞（Prompts）與邏輯架構，並融合傳統美學與現代藝術（如水墨擴散、國潮視覺）</p>
+                            <p><strong class="text-stone-900">預期收穫：</strong>由淺入深，學會從純文字生成品質插畫，到親手製作出細緻流暢的動態 AI 動畫短片。</p>
+                        </div>
+                    </div>
+                    <div class="px-8 pb-8">
+                        <img src="image02.jpg" alt="生成式 AI 影像課程" class="w-full h-48 object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                    </div>
+                    <div class="px-8 pb-6">
+                        <span class="text-sm font-bold text-stone-900 inline-flex items-center gap-1 border-b-2 border-stone-900 pb-0.5">查看詳細流程 <span aria-hidden="true">→</span></span>
+                    </div>
+                </a>
+
+                <!-- 03 Art-Tech 工作坊 -->
+                <a href="#course/03" class="bg-white rounded-2xl shadow-sm border border-gray-200/60 overflow-hidden flex flex-col justify-between course-card group hover:shadow-lg hover:-translate-y-1 transition-all duration-300" data-category="arttech">
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-4xl font-black text-gray-200">03</span>
+                            <div class="flex flex-wrap justify-end gap-2">
+                                <span class="cat-label">ART-TECH</span>
+                                <span class="bg-black text-white text-xs font-bold px-3 py-1 rounded-full">單元工作坊</span>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-stone-900 mb-1">Art-Tech 互動體驗工作坊</h3>
+                        <p class="text-sm font-semibold italic text-gray-500 mb-6">「單元 Art Tech 體驗：光與聲的即時派對」</p>
+                        
+                        <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
+                            <p><strong class="text-stone-900">建議人數：</strong>20 - 40 人</p>
+                            <p><strong class="text-stone-900">工作坊時長：</strong>1.5 小時 (單元體驗)</p>
+                            <p><strong class="text-stone-900">工作坊內容：</strong>單元體驗。專業導師團隊會攜帶完整互動器材親臨學校，搭建現場環境，讓學生即場體驗新媒體藝術。</p>
+                            <p><strong class="text-stone-900">工作坊重點：</strong>主打零基礎、高參與度。學生可進行現場實機操作，親身體會聲音、人體動作如何與現場光影畫面進行即時互動連動。</p>
+                            <p><strong class="text-stone-900">預期收穫：</strong>解構並認識 Art-Tech 的實際應用，啟發對Art-Tech與AI藝術、數碼設計與未來創意藝術的濃厚興趣。</p>
+                        </div>
+                    </div>
+                    <div class="px-8 pb-8">
+                        <img src="image03.jpg" alt="Art-Tech 工作坊相片" class="w-full h-48 object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                    </div>
+                    <div class="px-8 pb-6">
+                        <span class="text-sm font-bold text-stone-900 inline-flex items-center gap-1 border-b-2 border-stone-900 pb-0.5">查看詳細流程 <span aria-hidden="true">→</span></span>
+                    </div>
+                </a>
+
+                <!-- 04 AI 工作坊 -->
+                <a href="#course/04" class="bg-white rounded-2xl shadow-sm border border-gray-200/60 overflow-hidden flex flex-col justify-between course-card group hover:shadow-lg hover:-translate-y-1 transition-all duration-300" data-category="arttech ai">
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-4xl font-black text-gray-200">04</span>
+                            <div class="flex flex-wrap justify-end gap-2">
+                                <span class="cat-label">ART-TECH</span>
+                                <span class="cat-label">AI</span>
+                                <span class="bg-black text-white text-xs font-bold px-3 py-1 rounded-full">單元工作坊</span>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-stone-900 mb-1">AI 互動體驗工作坊</h3>
+                        <p class="text-sm font-semibold italic text-gray-500 mb-6">「使用 Gemini 快速創作你的互動藝術」</p>
+                        
+                        <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
+                            <p><strong class="text-stone-900">建議人數：</strong>20 - 40 人</p>
+                            <p><strong class="text-stone-900">工作坊時長：</strong>1.5 小時 (單元體驗)</p>
+                            <p><strong class="text-stone-900">工作坊內容：</strong> 透過具趣味性的實驗與互動藝術，將深奧的互動藝術概念，使用 AI 轉化成學生能即學即用的創意思維工具。</p>
+                            <p><strong class="text-stone-900">工作坊重點：</strong>打破常規！證明 AI 不只是單純文字和圖像工具，學生更可以將 AI 與視覺硬體聯動，好玩、易上手且充滿成就感。</p>
+                            <p><strong class="text-stone-900">預期收穫：</strong>學會與生成式 AI 進行深度精準對話的思考方式；全面啟發 AI 邏輯思維，將 AI 化為理想的工具。</p>
+                        </div>
+                    </div>
+                    <div class="px-8 pb-8">
+                        <img src="image04.jpg" alt="AI 工作坊相片" class="w-full h-48 object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                    </div>
+                    <div class="px-8 pb-6">
+                        <span class="text-sm font-bold text-stone-900 inline-flex items-center gap-1 border-b-2 border-stone-900 pb-0.5">查看詳細流程 <span aria-hidden="true">→</span></span>
+                    </div>
+                </a>
+
+                <!-- 05 AI 網頁生成與互動設計課 -->
+                <a href="#course/05" class="bg-white rounded-2xl shadow-sm border border-gray-200/60 overflow-hidden flex flex-col justify-between course-card group hover:shadow-lg hover:-translate-y-1 transition-all duration-300" data-category="ai">
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-4xl font-black text-gray-200">05</span>
+                            <div class="flex flex-wrap justify-end gap-2">
+                                <span class="cat-label">AI</span>
+                                <span class="bg-black text-white text-xs font-bold px-3 py-1 rounded-full">單元工作坊</span>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-stone-900 mb-1">AI 網頁生成與互動設計課</h3>
+                        <p class="text-sm font-semibold italic text-gray-500 mb-6">「用 AI 當作最強工具，毋須基礎寫出專屬網頁」</p>
+                        
+                        <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
+                            <p><strong class="text-stone-900">建議人數：</strong>20 - 40 人</p>
+                            <p><strong class="text-stone-900">課程時長：</strong>1.5 - 2 小時</p>
+                            <p><strong class="text-stone-900">課程內容：</strong>教授學生如何利用大型語言模型（LLM）輔助編程，一步步引導 AI 寫出 HTML、CSS 與 JavaScript 程式碼。</p>
+                            <p><strong class="text-stone-900">課程重點：</strong>著重於「指令工程（Prompt Engineering）」與邏輯拆解，引導學生將天馬行空的創意轉化為清晰的網頁架構與動態互動。</p>
+                            <p><strong class="text-stone-900">預期收穫：</strong>學生可以即堂架構到一個網站，避免繁複的coding，在 AI 協助下架設出個人作品或動態特效網頁，並能部署至 GitHub Pages 即時分享。</p>
+                        </div>
+                    </div>
+                    <div class="px-8 pb-8">
+                        <img src="image05.jpg" alt="AI 網頁生成圖片" class="w-full h-48 object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                    </div>
+                    <div class="px-8 pb-6">
+                        <span class="text-sm font-bold text-stone-900 inline-flex items-center gap-1 border-b-2 border-stone-900 pb-0.5">查看詳細流程 <span aria-hidden="true">→</span></span>
+                    </div>
+                </a>
+
+                <!-- 06 紅銅開口戒指/手鐲 工作坊 -->
+                <a href="#course/06" class="bg-white rounded-2xl shadow-sm border border-gray-200/60 overflow-hidden flex flex-col justify-between course-card group hover:shadow-lg hover:-translate-y-1 transition-all duration-300" data-category="metal">
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-4xl font-black text-gray-200">06</span>
+                            <div class="flex flex-wrap justify-end gap-2">
+                                <span class="cat-label">金工</span>
+                                <span class="bg-black text-white text-xs font-bold px-3 py-1 rounded-full">單元工作坊</span>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-stone-900 mb-1">紅銅開口戒指/手鐲 工作坊</h3>
+                        <p class="text-sm font-semibold italic text-gray-500 mb-6">「從一片紅銅開始，親手打造專屬首飾」</p>
+
+                        <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
+                            <p><strong class="text-stone-900">建議人數：</strong>10 - 30 人</p>
+                            <p><strong class="text-stone-900">課程時長：</strong>1 - 1.5 小時</p>
+                            <p><strong class="text-stone-900">課程內容：</strong>從一片樸實的紅銅片開始，透過雙手與工具，體驗完整金工創作流程，親手將金屬原材料製作成專屬戒指、手鐲。</p>
+                            <p><strong class="text-stone-900">製作工序：</strong>紋理鍛敲 → 塑形彎折 → 精細修磨</p>
+                            <p><strong class="text-stone-900">預期收穫：</strong>完成一件專屬的金屬首飾，體驗由原材料到成品的完整金工創作流程。</p>
+                        </div>
+                    </div>
+                    <div class="px-8 pb-8">
+                        <img src="metal_poster1.jpg" alt="紅銅開口戒指/手鐲 工作坊相片" class="w-full h-48 object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                    </div>
+                    <div class="px-8 pb-6">
+                        <span class="text-sm font-bold text-stone-900 inline-flex items-center gap-1 border-b-2 border-stone-900 pb-0.5">查看詳細流程 <span aria-hidden="true">→</span></span>
+                    </div>
+                </a>
+
+                <!-- 07 復古銅染工藝擺設 -->
+                <a href="#course/07" class="bg-white rounded-2xl shadow-sm border border-gray-200/60 overflow-hidden flex flex-col justify-between course-card group hover:shadow-lg hover:-translate-y-1 transition-all duration-300" data-category="metal">
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-4xl font-black text-gray-200">07</span>
+                            <div class="flex flex-wrap justify-end gap-2">
+                                <span class="cat-label">金工</span>
+                                <span class="bg-black text-white text-xs font-bold px-3 py-1 rounded-full">單元工作坊</span>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-stone-900 mb-1">復古銅染工藝擺設</h3>
+                        <p class="text-sm font-semibold italic text-gray-500 mb-6">「認識金屬的化學之美，科學與藝術的結合」</p>
+
+                        <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
+                            <p><strong class="text-stone-900">建議人數：</strong>10 - 30 人</p>
+                            <p><strong class="text-stone-900">課程時長：</strong>1 - 1.5 小時</p>
+                            <p><strong class="text-stone-900">課程內容：</strong>認識金屬氧化與銅染化學原理，學習使用安全染劑及抗蝕繪圖技法，跨學科結合「科學（STEAM）」與「藝術創作」，啟發創意思維。</p>
+                            <p><strong class="text-stone-900">製作工序：</strong>化學美學 → 圖案繪製 → 封層保護</p>
+                            <p><strong class="text-stone-900">預期收穫：</strong>完成一件復古銅染工藝擺設，同時理解金屬化學原理與藝術創作的結合。</p>
+                        </div>
+                    </div>
+                    <div class="px-8 pb-8">
+                        <img src="metal_poster1.jpg" alt="復古銅染工藝擺設課程相片" class="w-full h-48 object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                    </div>
+                    <div class="px-8 pb-6">
+                        <span class="text-sm font-bold text-stone-900 inline-flex items-center gap-1 border-b-2 border-stone-900 pb-0.5">查看詳細流程 <span aria-hidden="true">→</span></span>
+                    </div>
+                </a>
+
+                <!-- 08 金工長期班（深入進階） -->
+                <a href="#course/08" class="bg-white rounded-2xl shadow-sm border border-gray-200/60 overflow-hidden flex flex-col justify-between course-card group hover:shadow-lg hover:-translate-y-1 transition-all duration-300" data-category="metal">
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-4xl font-black text-gray-200">08</span>
+                            <div class="flex flex-wrap justify-end gap-2">
+                                <span class="cat-label">金工</span>
+                                <span class="bg-black text-white text-xs font-bold px-3 py-1 rounded-full">金工長期班</span>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-stone-900 mb-1">金工長期班（深入進階）</h3>
+                        <p class="text-sm font-semibold italic text-gray-500 mb-6">「深入金工核心技術，完成個人首飾系列」</p>
+
+                        <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
+                            <p><strong class="text-stone-900">建議人數：</strong>10 - 30 人</p>
+                            <p><strong class="text-stone-900">課程時長：</strong>1 - 1.5 小時</p>
+                            <p><strong class="text-stone-900">課程內容：</strong>深度掌握鋸切、焊接等核心金工技術，學習將設計草圖轉化為實體首飾系列，全面提升設計思維、解難能力與工藝匠心。</p>
+                            <p><strong class="text-stone-900">製作工序：</strong>基礎工具與安全 → 設計轉化 → 完成個人首飾系列</p>
+                            <p><strong class="text-stone-900">預期收穫：</strong>完成一組 3 至 5 件的個人首飾系列，掌握完整金工創作流程。</p>
+                        </div>
+                    </div>
+                    <div class="px-8 pb-8">
+                        <img src="metal_poster1.jpg" alt="金工長期班課程相片" class="w-full h-48 object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                    </div>
+                    <div class="px-8 pb-6">
+                        <span class="text-sm font-bold text-stone-900 inline-flex items-center gap-1 border-b-2 border-stone-900 pb-0.5">查看詳細流程 <span aria-hidden="true">→</span></span>
+                    </div>
+                </a>
+
+                <!-- 09 傳統錾刻錫紙畫工作坊 -->
+                <a href="#course/09" class="bg-white rounded-2xl shadow-sm border border-gray-200/60 overflow-hidden flex flex-col justify-between course-card group hover:shadow-lg hover:-translate-y-1 transition-all duration-300" data-category="metal">
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-4xl font-black text-gray-200">09</span>
+                            <div class="flex flex-wrap justify-end gap-2">
+                                <span class="cat-label">金工</span>
+                                <span class="bg-black text-white text-xs font-bold px-3 py-1 rounded-full">單元工作坊</span>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-stone-900 mb-1">傳統錾刻錫紙畫工作坊</h3>
+                        <p class="text-sm font-semibold italic text-gray-500 mb-6">「在錫紙上鍛敲出立體浮雕畫」</p>
+
+                        <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
+                            <p><strong class="text-stone-900">建議人數：</strong>10 - 30 人</p>
+                            <p><strong class="text-stone-900">課程時長：</strong>1 - 1.5 小時</p>
+                            <p><strong class="text-stone-900">課程內容：</strong>認識中國傳統錾刻歷史，學習於柔韌厚錫紙上進行正反按壓技法，將平面圖案轉化為立體生動的浮雕畫，鍛鍊手部精細動作。</p>
+                            <p><strong class="text-stone-900">製作工序：</strong>工藝歷史 → 圖案描摹 → 按壓技法 → 作品裝框</p>
+                            <p><strong class="text-stone-900">預期收穫：</strong>完成一幅裝裱的立體浮雕錫紙畫，認識中國傳統錾刻工藝。</p>
+                        </div>
+                    </div>
+                    <div class="px-8 pb-8">
+                        <img src="metal_poster2.jpg" alt="傳統錾刻錫紙畫工作坊相片" class="w-full h-48 object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                    </div>
+                    <div class="px-8 pb-6">
+                        <span class="text-sm font-bold text-stone-900 inline-flex items-center gap-1 border-b-2 border-stone-900 pb-0.5">查看詳細流程 <span aria-hidden="true">→</span></span>
+                    </div>
+                </a>
+
+                <!-- 10 非遺金箔書法拓印工作坊 -->
+                <a href="#course/10" class="bg-white rounded-2xl shadow-sm border border-gray-200/60 overflow-hidden flex flex-col justify-between course-card group hover:shadow-lg hover:-translate-y-1 transition-all duration-300" data-category="metal">
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-4xl font-black text-gray-200">10</span>
+                            <div class="flex flex-wrap justify-end gap-2">
+                                <span class="cat-label">金工</span>
+                                <span class="bg-black text-white text-xs font-bold px-3 py-1 rounded-full">單元工作坊</span>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-stone-900 mb-1">非遺金箔書法拓印工作坊</h3>
+                        <p class="text-sm font-semibold italic text-gray-500 mb-6">「親身體驗貼金工藝，顯現書法之美」</p>
+
+                        <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
+                            <p><strong class="text-stone-900">建議人數：</strong>10 - 30 人</p>
+                            <p><strong class="text-stone-900">課程時長：</strong>1 - 1.5 小時</p>
+                            <p><strong class="text-stone-900">課程內容：</strong>賞析傳統貼金歷史，透過安全簡便的步驟學習構圖、鋪展金箔與掃金顯圖技法，親身體驗頂級裝飾工藝，培養對中華文化的興趣。</p>
+                            <p><strong class="text-stone-900">製作工序：</strong>工藝典故 → 構圖設計 → 貼金覆箔 → 掃金顯圖</p>
+                            <p><strong class="text-stone-900">預期收穫：</strong>完成一幅金箔書法拓印作品，認識中國貼金工藝與書法之美。</p>
+                        </div>
+                    </div>
+                    <div class="px-8 pb-8">
+                        <img src="metal_poster2.jpg" alt="非遺金箔書法拓印工作坊相片" class="w-full h-48 object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                    </div>
+                    <div class="px-8 pb-6">
+                        <span class="text-sm font-bold text-stone-900 inline-flex items-center gap-1 border-b-2 border-stone-900 pb-0.5">查看詳細流程 <span aria-hidden="true">→</span></span>
+                    </div>
+                </a>
+
+                <!-- 11 非遺螺鈿手鏈工作坊 -->
+                <a href="#course/11" class="bg-white rounded-2xl shadow-sm border border-gray-200/60 overflow-hidden flex flex-col justify-between course-card group hover:shadow-lg hover:-translate-y-1 transition-all duration-300" data-category="metal">
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-4xl font-black text-gray-200">11</span>
+                            <div class="flex flex-wrap justify-end gap-2">
+                                <span class="cat-label">金工</span>
+                                <span class="bg-black text-white text-xs font-bold px-3 py-1 rounded-full">單元工作坊</span>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-stone-900 mb-1">非遺螺鈿手鏈工作坊</h3>
+                        <p class="text-sm font-semibold italic text-gray-500 mb-6">「以幻彩貝殼拼貼出精美手鏈」</p>
+
+                        <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
+                            <p><strong class="text-stone-900">建議人數：</strong>10 - 30 人</p>
+                            <p><strong class="text-stone-900">課程時長：</strong>1 - 1.5 小時</p>
+                            <p><strong class="text-stone-900">課程內容：</strong>認識中國傳統螺鈿（貝殼鑲嵌）工藝，學習挑選及拼貼幻彩貝殼片，結合現代安全封層技術製作精美手鏈，培養色彩搭配與藝術美感。</p>
+                            <p><strong class="text-stone-900">製作工序：</strong>工藝歷史 → 構圖拼貼 → 封層處理</p>
+                            <p><strong class="text-stone-900">預期收穫：</strong>完成一條精美螺鈿手鏈，認識傳統貝殼鑲嵌工藝與色彩美學。</p>
+                        </div>
+                    </div>
+                    <div class="px-8 pb-8">
+                        <img src="metal_poster2.jpg" alt="非遺螺鈿手鏈工作坊相片" class="w-full h-48 object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                    </div>
+                    <div class="px-8 pb-6">
+                        <span class="text-sm font-bold text-stone-900 inline-flex items-center gap-1 border-b-2 border-stone-900 pb-0.5">查看詳細流程 <span aria-hidden="true">→</span></span>
+                    </div>
+                </a>
+
+                <!-- 12 生涯規劃與職涯探索系列 -->
+                <a href="#course/12" class="bg-white rounded-2xl shadow-sm border border-gray-200/60 overflow-hidden flex flex-col justify-between course-card group hover:shadow-lg hover:-translate-y-1 transition-all duration-300" data-category="metal">
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-4xl font-black text-gray-200">12</span>
+                            <div class="flex flex-wrap justify-end gap-2">
+                                <span class="cat-label">金工</span>
+                                <span class="bg-black text-white text-xs font-bold px-3 py-1 rounded-full">系列課程</span>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-stone-900 mb-1">生涯規劃與職涯探索系列</h3>
+                        <p class="text-sm font-semibold italic text-gray-500 mb-6">「走進珠寶行業，啟發生涯規劃」</p>
+
+                        <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
+                            <p><strong class="text-stone-900">建議人數：</strong>10 - 30 人</p>
+                            <p><strong class="text-stone-900">課程時長：</strong>1 - 1.5 小時</p>
+                            <p><strong class="text-stone-900">課程內容：</strong>學生將實地參訪本地珠寶品牌並與業界人士交流，了解珠寶設計與商業營運的真實環境，從中拓闊視野並啟發未來的生涯規劃方向。</p>
+                            <p><strong class="text-stone-900">課程組成：</strong>企業參訪與實地觀察 + 業界人士分享講座</p>
+                            <p><strong class="text-stone-900">預期收穫：</strong>接觸真實職場工作者，提早了解珠寶行業前景，啟發生涯規劃方向。</p>
+                        </div>
+                    </div>
+                    <div class="px-8 pb-8">
+                        <img src="metal_poster2.jpg" alt="生涯規劃與職涯探索系列相片" class="w-full h-48 object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                    </div>
+                    <div class="px-8 pb-6">
+                        <span class="text-sm font-bold text-stone-900 inline-flex items-center gap-1 border-b-2 border-stone-900 pb-0.5">查看詳細流程 <span aria-hidden="true">→</span></span>
+                    </div>
+                </a>
+
+            </div>
+
+            <!-- 空分類提示 -->
+            <div id="catalog-empty" class="hidden text-center py-20">
+                <p class="text-lg font-bold text-gray-700">此分類課程籌備中</p>
+                <p class="text-sm text-gray-500 mt-2">如有興趣，歡迎 <a href="#contact" class="text-black font-semibold underline underline-offset-4">聯絡我們</a> 查詢最新課程安排</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4.5 課程詳細頁（單頁切換，不跳轉） -->
+    <section id="course-detail" class="hidden bg-gray-100/60 py-16 px-4 relative z-10 min-h-[80vh]">
+        <div class="max-w-4xl mx-auto">
+            <button type="button" id="detail-back" class="inline-flex items-center gap-2 text-sm font-bold text-gray-600 hover:text-black transition mb-8">
+                <span aria-hidden="true">←</span> 返回課程目錄
+            </button>
+            <div id="detail-content"></div>
+        </div>
+    </section>
+
+    <!-- 4.6 活動花絮 / 學生作品 -->
+    <section id="gallery" class="bg-white py-24 px-4 border-b border-gray-200/50 relative z-10">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-14">
+                <h2 class="text-3xl font-black text-gray-900 tracking-wide">活動花絮 / 學生作品</h2>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                <figure class="rounded-2xl overflow-hidden shadow-sm border border-gray-100">
+                    <img src="imageV01.jpg" alt="活動花絮" class="w-full h-44 md:h-56 object-cover">
+                </figure>
+                <figure class="rounded-2xl overflow-hidden shadow-sm border border-gray-100">
+                    <img src="imageV02.jpg" alt="活動花絮" class="w-full h-44 md:h-56 object-cover">
+                </figure>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. 聯絡我們 -->
+    <section id="contact" class="bg-black text-white py-24 pb-16 px-4 relative overflow-hidden z-10">
+        <div class="max-w-xl mx-auto relative z-10">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold tracking-wide">聯絡我們 / 預約體驗</h2>
+                <p class="text-stone-400 mt-2 text-sm">歡迎學校、機構、團體聯絡。我們將儘速與 貴校/公司聯繫並提供詳細企劃書。</p>
+            </div>
+            
+            <form id="contact-form" class="space-y-4 text-gray-900 mb-20 relative z-20">
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" name="name" placeholder="您的姓名 / 職稱" required class="p-3 rounded-lg w-full text-sm bg-white border border-gray-200">
+                    <input type="text" name="company" placeholder="學校 / 機構名稱" required class="p-3 rounded-lg w-full text-sm bg-white border border-gray-200">
+                </div>
+                <input type="email" name="email" placeholder="聯絡電子信箱" required class="p-3 rounded-lg w-full text-sm bg-white border border-gray-200">
+                <input type="tel" name="phone" placeholder="聯絡電話" required class="p-3 rounded-lg w-full text-sm bg-white border border-gray-200">
+                <textarea rows="4" name="message" placeholder="請簡述您的需求（例如：預計對象、級別、預估人數、期望時間等）" class="p-3 rounded-lg w-full text-sm bg-white border border-gray-200"></textarea>
+                
+                <button type="submit" id="submit-btn" class="w-full bg-white text-stone-900 font-bold py-3 rounded-lg hover:bg-stone-200 transition shadow-lg tracking-wider">提交</button>
+            </form>
+            <!-- 聯絡資料 -->
+            <div class="text-center mb-16 -mt-12 relative z-20">
+                <p class="text-stone-400 text-sm">歡迎電郵聯絡我們：</p>
+                <a href="mailto:waahaa.sj@gmail.com" class="text-white hover:text-stone-300 text-base font-semibold tracking-wider mt-2 inline-block transition border-b border-white/20 hover:border-white">
+                    waahaa.sj@gmail.com
+                </a>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-3xl mx-auto mt-7">
+                    <a href="https://www.instagram.com/waahaa.sj_production/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 rounded-full border border-stone-600 px-4 py-2 text-sm text-stone-300 hover:border-white hover:text-white transition">
+                        <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                        <span>ART-TECH · @waahaa.sj_production</span>
+                    </a>
+                    <a href="https://www.instagram.com/waahaa.sj/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 rounded-full border border-stone-600 px-4 py-2 text-sm text-stone-300 hover:border-white hover:text-white transition">
+                        <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                        <span>ART-TECH · @waahaa.sj</span>
+                    </a>
+                    <a href="https://www.instagram.com/n.ino.s/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 rounded-full border border-stone-600 px-4 py-2 text-sm text-stone-300 hover:border-white hover:text-white transition">
+                        <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                        <span>金工 · @n.ino.s</span>
+                    </a>
+                </div>
+            </div>
+            <!-- 合作機構區塊開頭 -->
+        <div style="width: 100%; max-width: 1200px; margin: 0 auto; padding: 40px 20px; text-align: center; box-sizing: border-box;">
+            
+            <h3 style="font-size: 13px; font-weight: 700; color: #888; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 24px;">
+                COOPERATING ORGANIZATIONS / 合作機構
+            </h3>
+            
+            <!-- Logo 容器：手機版預設每行 2 個 (grid-template-columns: repeat(2, 1fr))，並縮小圖表 -->
+            <div id="partner-logos-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; justify-content: center; align-items: center; max-width: 600px; margin: 0 auto;">
+                
+                <!-- Logo 1: VTC -->
+                <div style="background-color: #fff; border-radius: 12px; padding: 8px 12px; display: flex; align-items: center; justify-content: center; height: 65px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden;">
+                    <img src="vtc.png" alt="VTC" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+                
+                <!-- Logo 2: BE@RBRICK MACAU -->
+                <div style="background-color: #fff; border-radius: 12px; padding: 8px 12px; display: flex; align-items: center; justify-content: center; height: 65px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden;">
+                    <img src="bearbrick.png" alt="BE@RBRICK MACAU" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+                
+                <!-- Logo 3: 連青·南昌 -->
+                <div style="background-color: #fff; border-radius: 12px; padding: 8px 12px; display: flex; align-items: center; justify-content: center; height: 65px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden;">
+                    <img src="youthlink.png" alt="連青·南昌" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+                
+                <!-- Logo 4: THE PURE LAND ASSEMBLY 淨土薈 -->
+                <!-- 修正：利用 position: relative 與 object-fit 防止突出的神像圖案吃掉或壓到隔壁的元件 -->
+                <div style="background-color: #fff; border-radius: 12px; padding: 8px 12px; display: flex; align-items: center; justify-content: center; height: 65px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); position: relative;">
+                    <img src="pureland.png" alt="THE PURE LAND ASSEMBLY" style="max-width: 100%; max-height: 125%; object-fit: contain; position: absolute; bottom: 0;">
+                </div>
+                
+            </div>
+        </div>
+
+        <!-- 針對電腦螢幕 (寬度大於 768px) 的自動放大調整樣式 -->
+        <style>
+            @media (min-width: 768px) {
+                #partner-logos-grid {
+                    grid-template-columns: repeat(4, 1fr) !important; /* 電腦版恢復橫排 4 個 */
+                    max-width: 900px !important;
+                    gap: 20px !important;
+                }
+                #partner-logos-grid > div {
+                    height: 90px !important; /* 電腦版格子變大 */
+                    padding: 15px 20px !important;
+                }
+            }
+        </style>
+        </div>
+    </section>
+
+    <!-- 6. 頁尾 -->
+    <footer class="bg-stone-950 text-gray-600 text-center py-8 text-xs border-t border-stone-900 relative z-10">
+        <p>© 2026 Waahaa SJ Studio (仕人工作室). All rights reserved. 網頁由 WebGL Fluid Shader 技術驅動</p>
+    </footer>
+
+    <!-- Three.js 行雲流水 -->
+    <script>
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+        
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.0));
+        container.appendChild(renderer.domElement);
+
+        const vertexShader = `
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = vec4(position, 1.0);
+            }
+        `;
+
+        const fragmentShader = `
+            uniform float u_time;
+            uniform vec2 u_mouse;
+            uniform vec2 u_resolution;
+            varying vec2 vUv;
+
+            vec2 hash(vec2 p) {
+                p = vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)));
+                return -1.0 + 2.0 * fract(sin(p) * 43758.5453123);
+            }
+
+            float noise2d(vec2 p) {
+                vec2 i = floor(p);
+                vec2 f = fract(p);
+                vec2 u = f*f*(3.0-2.0*f);
+                return mix(mix(dot(hash(i + vec2(0.0,0.0)), f - vec2(0.0,0.0)), 
+                               dot(hash(i + vec2(1.0,0.0)), f - vec2(1.0,0.0)), u.x),
+                           mix(dot(hash(i + vec2(0.0,1.0)), f - vec2(0.0,1.0)), 
+                               dot(hash(i + vec2(1.0,1.0)), f - vec2(1.0,1.0)), u.x), u.y);
+            }
+
+            void main() {
+                vec2 uv = vUv;
+                uv.x *= u_resolution.x / u_resolution.y;
+                
+                vec2 motion = vec2(
+                    noise2d(uv * 1.2 + vec2(u_time * 0.08, u_time * 0.05)),
+                    noise2d(uv * 1.2 - vec2(u_time * 0.05, u_time * 0.08))
+                );
+                
+                motion += u_mouse * 0.15;
+
+                float inkDensity = noise2d(uv * 2.0 + motion * 1.5);
+
+                inkDensity = smoothstep(0.0, 0.4, inkDensity);
+
+                vec3 bgColor = vec3(1.0, 1.0, 1.0);
+                vec3 inkColor = vec3(0.02, 0.02, 0.02);
+                
+                vec3 finalColor = mix(bgColor, inkColor, inkDensity * 0.75);
+                gl_FragColor = vec4(finalColor, 1.0);
+            }
+        `;
+
+        const uniforms = {
+            u_time: { value: 0.0 },
+            u_mouse: { value: new THREE.Vector2(0, 0) },
+            u_resolution: { value: new THREE.Vector2(container.clientWidth, container.clientHeight) }
+        };
+
+        const geometry = new THREE.PlaneGeometry(2, 2);
+        const material = new THREE.ShaderMaterial({
+            vertexShader: vertexShader,
+            fragmentShader: fragmentShader,
+            uniforms: uniforms,
+            transparent: true
+        });
+
+        const mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+
+        let mouseX = 0, mouseY = 0;
+        let targetX = 0, targetY = 0;
+
+        window.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        });
+
+        const clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            uniforms.u_time.value = clock.getElapsedTime();
+            
+            targetX += (mouseX - targetX) * 0.06;
+            targetY += (mouseY - targetY) * 0.06;
+            uniforms.u_mouse.value.set(targetX, targetY);
+            
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            renderer.setSize(width, height);
+            uniforms.u_resolution.value.set(width, height);
+        });
+    </script>
+
+    <!-- 課程目錄分類篩選（單頁切換，不跳轉） -->
+    <script>
+        const catTabs = document.querySelectorAll('.cat-tab');
+        const courseCards = document.querySelectorAll('.course-card');
+        const emptyState = document.getElementById('catalog-empty');
+
+        function applyFilter(cat) {
+            let visible = 0;
+            courseCards.forEach(card => {
+                const show = cat === 'all' || card.dataset.category.split(' ').includes(cat);
+                card.style.display = show ? '' : 'none';
+                if (show) visible += 1;
+            });
+            if (emptyState) {
+                emptyState.style.display = visible === 0 ? '' : 'none';
+            }
+        }
+
+        catTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                catTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                applyFilter(tab.dataset.cat);
+            });
+        });
+
+        // 預設顯示「全部」
+        applyFilter('all');
+    </script>
+
+    <!-- 課程詳細頁邏輯（單頁切換，不跳轉） -->
+    <script>
+        // 課程詳細資料：流程為根據課程現有描述起草的建議大綱，可自行修改
+        const courseDetails = {
+            '01': {
+                title: 'Art-Tech 互動藝術課 (TouchDesigner)',
+                tagline: '「不用寫代碼，用邏輯與美感操控光影」',
+                cats: ['ART-TECH'],
+                type: '常規課程 (6堂)',
+                image: 'image01.jpg',
+                meta: [['建議人數', '20 - 35 人'], ['每堂時長', '1 - 1.5 小時']],
+                intro: '使用業界即時視覺軟體 TouchDesigner，教導學生以「節點」代替繁瑣程式碼，探索 Art-Tech 的無限可行性。深度結合 STEAM 教育，引導學生將數字轉化為動態藝術，並融入傳統中華文化意象。',
+                flow: [
+                    ['第 1 堂', '認識 Art-Tech 與 TouchDesigner：了解即時視覺運算概念，熟悉軟體介面與節點工作區'],
+                    ['第 2 堂', '節點基礎編排：以節點生成圖形、顏色與材質，建立第一組動態視覺'],
+                    ['第 3 堂', '光影與動態：加入時間與參數控制，讓畫面「活」起來'],
+                    ['第 4 堂', '互動元素：連結滑鼠、聲音等輸入訊號，感受即時互動的樂趣'],
+                    ['第 5 堂', '文化意象創作：將水墨、書法等中華文化元素數位化，完成個人主題作品'],
+                    ['第 6 堂', '沉浸式展覽：整合作品並舉辦小型沉浸式展覽，分享創作成果']
+                ],
+                highlights: ['深度結合 STEAM 教育', '數字轉化為動態藝術', '融入傳統中華文化意象'],
+                outcome: '掌握即時互動藝術與 AI 軟件的實際應用，親手打造出屬於自己的沉浸式展覽。'
+            },
+            '02': {
+                title: '生成式 AI 影像課 (ComfyUI)',
+                tagline: '「掌控 AI，學會生成式創作」',
+                cats: ['ART-TECH', 'AI'],
+                type: '常規課程 (6堂)',
+                image: 'image02.jpg',
+                meta: [['建議人數', '20 - 35 人'], ['每堂時長', '1 - 1.5 小時']],
+                intro: '雲端平台運行，免卻學校電腦硬件配置限制，專注教授 AI 的工作流邏輯。學習精準的提示詞（Prompts）與邏輯架構，並融合傳統美學與現代藝術，如水墨擴散、國潮視覺。',
+                flow: [
+                    ['第 1 堂', 'AI 影像生成概覽：認識生成式 AI，登入 ComfyUI 雲端平台並熟悉介面'],
+                    ['第 2 堂', '工作流邏輯：了解節點式工作流、模型與參數的基本概念'],
+                    ['第 3 堂', '精準提示詞：學習 Prompt 結構與技巧，從純文字生成高品質插畫'],
+                    ['第 4 堂', '風格融合：水墨擴散、國潮視覺等傳統美學與現代藝術的結合'],
+                    ['第 5 堂', '動態創作：從靜態圖像延伸，製作細緻流暢的 AI 動畫短片'],
+                    ['第 6 堂', '作品發表：完成個人系列作品並互相分享成果']
+                ],
+                highlights: ['雲端平台運行，零硬件限制', '精準提示詞與邏輯架構', '傳統美學 × 現代藝術'],
+                outcome: '由淺入深，學會從純文字生成品質插畫，到親手製作出細緻流暢的動態 AI 動畫短片。'
+            },
+            '03': {
+                title: 'Art-Tech 互動體驗工作坊',
+                tagline: '「單元 Art Tech 體驗：光與聲的即時派對」',
+                cats: ['ART-TECH'],
+                type: '單元工作坊',
+                image: 'image03.jpg',
+                meta: [['建議人數', '20 - 40 人'], ['工作坊時長', '1.5 小時 (單元體驗)']],
+                intro: '單元體驗。專業導師團隊攜帶完整互動器材親臨學校，搭建現場環境，讓學生即場體驗新媒體藝術。主打零基礎、高參與度。',
+                flow: [
+                    ['開場 (15分鐘)', 'Art-Tech 概念解構：以實際案例認識新媒體藝術'],
+                    ['示範 (30分鐘)', '導師示範聲音、人體動作如何與現場光影畫面即時互動連動'],
+                    ['實作 (30分鐘)', '學生現場實機操作，親身體會即時互動的樂趣'],
+                    ['總結 (15分鐘)', '分享與啟發：認識 Art-Tech 的實際應用與未來可能']
+                ],
+                highlights: ['零基礎、高參與度', '現場實機操作', '光與聲的即時互動連動'],
+                outcome: '解構並認識 Art-Tech 的實際應用，啟發對 Art-Tech、AI 藝術、數碼設計與未來創意藝術的濃厚興趣。'
+            },
+            '04': {
+                title: 'AI 互動體驗工作坊',
+                tagline: '「使用 Gemini 快速創作你的互動藝術」',
+                cats: ['ART-TECH', 'AI'],
+                type: '單元工作坊',
+                image: 'image04.jpg',
+                meta: [['建議人數', '20 - 40 人'], ['工作坊時長', '1.5 小時 (單元體驗)']],
+                intro: '透過具趣味性的實驗與互動藝術，將深奧的互動藝術概念，使用 AI 轉化成學生能即學即用的創意思維工具。打破常規——AI 不只是文字和圖像工具，更可與視覺硬體聯動。',
+                flow: [
+                    ['開場 (15分鐘)', '認識 AI 互動藝術：打破「AI 只是文字與圖像工具」的框架'],
+                    ['示範 (30分鐘)', '導師示範以 Gemini 快速創作互動藝術'],
+                    ['實作 (30分鐘)', '學生將 AI 與視覺硬體聯動，親手完成互動作品'],
+                    ['總結 (15分鐘)', '學會與生成式 AI 深度精準對話的思考方式']
+                ],
+                highlights: ['好玩、易上手、充滿成就感', 'AI 與視覺硬體聯動', '即學即用的創意思維'],
+                outcome: '學會與生成式 AI 進行深度精準對話的思考方式；全面啟發 AI 邏輯思維，將 AI 化為理想的工具。'
+            },
+            '05': {
+                title: 'AI 網頁生成與互動設計課',
+                tagline: '「用 AI 當作最強工具，毋須基礎寫出專屬網頁」',
+                cats: ['AI'],
+                type: '單元工作坊',
+                image: 'image05.jpg',
+                meta: [['建議人數', '20 - 40 人'], ['課程時長', '1.5 - 2 小時']],
+                intro: '教授學生如何利用大型語言模型（LLM）輔助編程，一步步引導 AI 寫出 HTML、CSS 與 JavaScript 程式碼。著重「指令工程（Prompt Engineering）」與邏輯拆解。',
+                flow: [
+                    ['開場 (15分鐘)', '認識 LLM 與指令工程（Prompt Engineering）'],
+                    ['示範 (30分鐘)', '示範如何用 AI 生成網頁架構與動態互動效果'],
+                    ['實作 (45分鐘)', '學生即堂架構個人網站或動態特效網頁'],
+                    ['部署與分享 (15-30分鐘)', '部署至 GitHub Pages，即時分享成果']
+                ],
+                highlights: ['專注指令工程與邏輯拆解', '毋須 coding 基礎', '即堂架設個人網站'],
+                outcome: '學生可以即堂架構到一個網站，避免繁複的 coding，在 AI 協助下架設出個人作品或動態特效網頁，並能部署至 GitHub Pages 即時分享。'
+            },
+            '06': {
+                title: '紅銅開口戒指/手鐲 工作坊',
+                tagline: '「從一片紅銅開始，親手打造專屬首飾」',
+                cats: ['金工'],
+                type: '單元工作坊',
+                image: 'metal_poster1.jpg',
+                meta: [['建議人數', '10 - 30 人'], ['課程時長', '1 - 1.5 小時']],
+                intro: '從一片樸實的紅銅片開始，透過雙手與工具，體驗完整金工創作流程，親手將一塊金屬原材料製作成專屬戒指、手鐲。所有課程均包含全套材料與工具，並將傳統工序安全化及簡化，適合初學者及學生參與。',
+                flow: [
+                    ['紋理鍛敲', '使用金工錘敲擊出獨特的金屬紋理'],
+                    ['塑形彎折', '進行金屬的彎折與結構塑形'],
+                    ['精細修磨', '運用砂紙打磨及拋光處理，完成作品']
+                ],
+                highlights: ['全套材料與工具已備', '傳統工序安全化及簡化', '由原材料到成品的完整體驗'],
+                outcome: '完成一件專屬的金屬首飾，體驗由原材料到成品的完整金工創作流程。'
+            },
+            '07': {
+                title: '復古銅染工藝擺設',
+                tagline: '「認識金屬的化學之美，科學與藝術的結合」',
+                cats: ['金工'],
+                type: '單元工作坊',
+                image: 'metal_poster1.jpg',
+                meta: [['建議人數', '10 - 30 人'], ['課程時長', '1 - 1.5 小時']],
+                intro: '學生將認識金屬氧化與銅染化學原理，學習使用安全染劑及抗蝕繪圖技法，跨學科結合「科學（STEAM）」與「藝術創作」，啟發創意思維。',
+                flow: [
+                    ['化學美學', '介紹銅染的化學原理與安全染劑'],
+                    ['圖案繪製', '清潔銅面後，以抗蝕劑繪出個人圖案'],
+                    ['封層保護', '為銅片塗上保護蠟，防止氧化，完成擺設']
+                ],
+                highlights: ['跨學科結合科學（STEAM）與藝術', '安全染劑與抗蝕繪圖技法', '親手完成復古銅染擺設'],
+                outcome: '完成一件復古銅染工藝擺設，同時理解金屬化學原理與藝術創作的結合。'
+            },
+            '08': {
+                title: '金工長期班（深入進階）',
+                tagline: '「深入金工核心技術，完成個人首飾系列」',
+                cats: ['金工'],
+                type: '金工長期班',
+                image: 'metal_poster1.jpg',
+                meta: [['建議人數', '10 - 30 人'], ['課程時長', '1 - 1.5 小時']],
+                intro: '學生將深度掌握鋸切、焊接等核心金工技術，學習將設計草圖轉化為實體首飾系列，全面提升設計思維、解難能力與工藝匠心。',
+                flow: [
+                    ['基礎工具與安全', '熟悉金工基礎工具與設備的安全操作'],
+                    ['設計轉化', '繪製設計圖並轉化為實體首飾的能力'],
+                    ['系列完成', '完成一組 3 至 5 件的個人首飾系列']
+                ],
+                highlights: ['鋸切、焊接等核心金工技術', '設計草圖轉化為實體', '全面提升設計思維與解難能力'],
+                outcome: '完成一組 3 至 5 件的個人首飾系列，掌握完整金工創作流程。'
+            },
+            '09': {
+                title: '傳統錾刻錫紙畫工作坊',
+                tagline: '「在錫紙上鍛敲出立體浮雕畫」',
+                cats: ['金工'],
+                type: '單元工作坊',
+                image: 'metal_poster2.jpg',
+                meta: [['建議人數', '10 - 30 人'], ['課程時長', '1 - 1.5 小時']],
+                intro: '學生將認識中國傳統錾刻歷史，學習於柔韌厚錫紙上進行正反按壓技法，將平面圖案轉化為立體生動的浮雕畫，鍛鍊手部精細動作。',
+                flow: [
+                    ['工藝歷史', '認識中國錾刻工藝的歷史背景與原理'],
+                    ['圖案描摹', '將傳統圖案精準描摹至金屬箔片上'],
+                    ['按壓技法', '使用圓頭筆按壓，製作立體浮雕效果'],
+                    ['作品裝框', '將完成的錫紙畫裝入相框中妥善保存']
+                ],
+                highlights: ['中國傳統錾刻工藝', '平面圖案轉化為立體浮雕', '鍛鍊手部精細動作'],
+                outcome: '完成一幅裝裱的立體浮雕錫紙畫，認識中國傳統錾刻工藝。'
+            },
+            '10': {
+                title: '非遺金箔書法拓印工作坊',
+                tagline: '「親身體驗貼金工藝，顯現書法之美」',
+                cats: ['金工'],
+                type: '單元工作坊',
+                image: 'metal_poster2.jpg',
+                meta: [['建議人數', '10 - 30 人'], ['課程時長', '1 - 1.5 小時']],
+                intro: '學生將賞析傳統貼金歷史，透過安全簡便的步驟學習構圖、鋪展金箔與掃金顯圖技法，親身體驗頂級裝飾工藝，培養對中華文化的興趣。',
+                flow: [
+                    ['工藝典故', '貼金歷史與應用場景賞析'],
+                    ['構圖設計', '構思並設計簡單的圖案佈局'],
+                    ['貼金覆箔', '以鑷子細心鋪展金箔於膠水上'],
+                    ['掃金顯圖', '用軟毛刷掃去多餘的金箔，顯現圖案']
+                ],
+                highlights: ['認識中國貼金工藝', '安全簡便的貼金步驟', '體驗頂級裝飾工藝'],
+                outcome: '完成一幅金箔書法拓印作品，認識中國貼金工藝與書法之美。'
+            },
+            '11': {
+                title: '非遺螺鈿手鏈工作坊',
+                tagline: '「以幻彩貝殼拼貼出精美手鏈」',
+                cats: ['金工'],
+                type: '單元工作坊',
+                image: 'metal_poster2.jpg',
+                meta: [['建議人數', '10 - 30 人'], ['課程時長', '1 - 1.5 小時']],
+                intro: '學生將認識中國傳統螺鈿（貝殼鑲嵌）工藝，學習挑選及拼貼幻彩貝殼片，結合現代安全封層技術製作精美手鏈，培養色彩搭配與藝術美感。',
+                flow: [
+                    ['工藝歷史', '介紹傳統螺鈿鑲嵌的歷史與貝殼特性'],
+                    ['構圖拼貼', '挑選合適的天然貝殼碎片，於手鏈底座進行拼圖設計'],
+                    ['封層處理', '使用滴膠進行安全封層，讓貝殼光澤持久平滑']
+                ],
+                highlights: ['中國傳統螺鈿鑲嵌工藝', '幻彩貝殼拼貼設計', '現代安全封層技術'],
+                outcome: '完成一條精美螺鈿手鏈，認識傳統貝殼鑲嵌工藝與色彩美學。'
+            },
+            '12': {
+                title: '生涯規劃與職涯探索系列',
+                tagline: '「走進珠寶行業，啟發生涯規劃」',
+                cats: ['金工'],
+                type: '系列課程',
+                image: 'metal_poster2.jpg',
+                meta: [['建議人數', '10 - 30 人'], ['課程時長', '1 - 1.5 小時']],
+                intro: '學生將實地參訪本地珠寶品牌並與業界人士交流，了解珠寶設計與商業營運的真實環境，從中拓闊視野並啟發未來的生涯規劃方向。所有課程可因校方需求度身訂造，歡迎學校／團體查詢及包班。',
+                flow: [
+                    ['企業參訪與實地觀察', '帶領學生走進真實職場，實地觀察珠寶品牌的日常運作、設計流程與具體工作要求'],
+                    ['業界人士分享講座', '由本地珠寶設計師或品牌創辦人分享入行歷程、職業發展階梯與市場動態']
+                ],
+                highlights: ['走進真實職場', '與業界人士直接交流', '拓闊視野、啟發生涯規劃'],
+                outcome: '接觸真實的職場工作者，提早了解珠寶行業前景，啟發未來的生涯規劃方向。'
+            }
+        };
+
+        const catalogSection = document.getElementById('catalog');
+        const detailSection = document.getElementById('course-detail');
+        const detailContent = document.getElementById('detail-content');
+        const detailBack = document.getElementById('detail-back');
+
+        function renderDetail(id) {
+            const d = courseDetails[id];
+            if (!d) return;
+            const badgeHtml = d.cats.map(c => `<span class="cat-label">${c}</span>`).join('');
+            const metaHtml = d.meta.map(m => `<p class="text-sm font-medium text-gray-600"><strong class="text-stone-900">${m[0]}：</strong>${m[1]}</p>`).join('');
+            const flowHtml = d.flow.map(f => `
+                <li class="flex flex-col sm:flex-row sm:gap-4">
+                    <span class="shrink-0 sm:w-36 text-sm font-black text-stone-900">${f[0]}</span>
+                    <span class="text-sm text-gray-600 leading-relaxed">${f[1]}</span>
+                </li>`).join('');
+            const highlightHtml = d.highlights.map(h => `<li class="flex gap-2 text-sm text-gray-600"><span aria-hidden="true" class="text-stone-900 font-black">·</span>${h}</li>`).join('');
+
+            detailContent.innerHTML = `
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200/60 overflow-hidden">
+                    <div class="relative">
+                        <img src="${d.image}" alt="${d.title}" class="w-full h-64 md:h-80 object-cover">
+                        <div class="absolute top-4 left-4 flex flex-wrap gap-2">${badgeHtml}</div>
+                    </div>
+                    <div class="p-8 md:p-12">
+                        <div class="flex flex-wrap items-center gap-3 mb-3">
+                            <span class="text-4xl font-black text-gray-200">${id}</span>
+                            <span class="bg-black text-white text-xs font-bold px-3 py-1 rounded-full">${d.type}</span>
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-extrabold text-stone-900">${d.title}</h3>
+                        <p class="text-sm font-semibold italic text-gray-500 mt-1 mb-6">${d.tagline}</p>
+
+                        <div class="grid md:grid-cols-2 gap-6 border-t border-gray-100 pt-6">
+                            <div>
+                                <h4 class="text-sm font-black text-stone-900 tracking-widest uppercase mb-3">課程簡介</h4>
+                                <p class="text-sm text-gray-600 leading-relaxed">${d.intro}</p>
+                            </div>
+                            <div class="space-y-3">
+                                ${metaHtml}
+                            </div>
+                        </div>
+
+                        <div class="mt-8 border-t border-gray-100 pt-6">
+                            <h4 class="text-sm font-black text-stone-900 tracking-widest uppercase mb-4">課程流程</h4>
+                            <ol class="space-y-4">
+                                ${flowHtml}
+                            </ol>
+                        </div>
+
+                        <div class="mt-8 border-t border-gray-100 pt-6 grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="text-sm font-black text-stone-900 tracking-widest uppercase mb-3">課程重點</h4>
+                                <ul class="space-y-2">
+                                    ${highlightHtml}
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-black text-stone-900 tracking-widest uppercase mb-3">預期收穫</h4>
+                                <p class="text-sm text-gray-600 leading-relaxed">${d.outcome}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>`;
+
+            catalogSection.style.display = 'none';
+            detailSection.classList.remove('hidden');
+        }
+
+        function showCatalog() {
+            detailSection.classList.add('hidden');
+            catalogSection.style.display = '';
+        }
+
+        function handleHash() {
+            const m = location.hash.match(/^#course\/(\d+)/);
+            if (m && courseDetails[m[1]]) {
+                renderDetail(m[1]);
+            } else {
+                showCatalog();
+            }
+        }
+
+        detailBack.addEventListener('click', () => {
+            location.hash = '#catalog';
+        });
+
+        window.addEventListener('hashchange', handleHash);
+        handleHash();
+    </script>
+
+    <!-- Google Sheet 傳送 JS 邏輯 -->
+    <script>
+        const form = document.getElementById('contact-form');
+        const submitBtn = document.getElementById('submit-btn');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // 阻止網頁跳轉
+            
+            submitBtn.disabled = true;
+            submitBtn.innerText = '正在傳送資料...';
+
+            const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbyGHmk5ush8lE_nxKGCtUcIDdjVtdFg5BlSBhsHPHnShDfOLbdQTaCVMK_LeZxtTTG4/exec'; 
+
+            const formData = new FormData(form);
+            const urlEncoded = new URLSearchParams(formData).toString();
+
+            fetch(googleScriptUrl, {
+                method: 'POST',
+                mode: 'no-cors', 
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: urlEncoded
+            })
+            .then(() => {
+                alert('已經收到您的留言，我們會盡快聯絡您！');
+                form.reset(); // 清空表單
+                submitBtn.disabled = false;
+                submitBtn.innerText = '提交';
+            })
+            .catch(error => {
+                console.error('Error!', error.message);
+                alert('傳送失敗，請稍後再試，或直接與我們 Email 聯絡。');
+                submitBtn.disabled = false;
+                submitBtn.innerText = '提交';
+            });
+        });
+    </script>
+</body>
+</html>
