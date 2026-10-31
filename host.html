@@ -1104,11 +1104,13 @@
 
             catalogSection.style.display = 'none';
             detailSection.classList.remove('hidden');
+            window.scrollTo({ top: detailSection.offsetTop, behavior: 'instant' });
         }
 
         function showCatalog() {
             detailSection.classList.add('hidden');
             catalogSection.style.display = '';
+            window.scrollTo({ top: catalogSection.offsetTop, behavior: 'instant' });
         }
 
         function handleHash() {

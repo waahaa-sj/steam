@@ -620,16 +620,16 @@
             <div class="border-t border-stone-800 pt-12 text-center">
                 <span class="text-xs uppercase tracking-widest text-stone-500 font-bold block mb-6">COOPERATING ORGANIZATIONS / 合作機構</span>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 items-center justify-items-center max-w-xl mx-auto">
-                    <div class="bg-white p-3 rounded-xl w-full h-14 flex items-center justify-center shadow-sm hover:scale-105 hover:shadow-md transition duration-300">
+                    <div class="bg-white p-3 rounded-xl w-full h-14 flex items-center justify-center shadow-sm md:hover:scale-105 md:hover:shadow-md transition duration-300">
                         <img src="logo01.png" alt="合作機構 Logo 1" class="max-h-full max-w-full object-contain">
                     </div>
-                    <div class="bg-white p-3 rounded-xl w-full h-14 flex items-center justify-center shadow-sm hover:scale-105 hover:shadow-md transition duration-300">
+                    <div class="bg-white p-3 rounded-xl w-full h-14 flex items-center justify-center shadow-sm md:hover:scale-105 md:hover:shadow-md transition duration-300">
                         <img src="logo02.png" alt="合作機構 Logo 2" class="max-h-full max-w-full object-contain">
                     </div>
-                    <div class="bg-white p-3 rounded-xl w-full h-14 flex items-center justify-center shadow-sm hover:scale-105 hover:shadow-md transition duration-300">
+                    <div class="bg-white p-3 rounded-xl w-full h-14 flex items-center justify-center shadow-sm md:hover:scale-105 md:hover:shadow-md transition duration-300">
                         <img src="logo03.png" alt="合作機構 Logo 3" class="max-h-full max-w-full object-contain">
                     </div>
-                    <div class="bg-white p-3 rounded-xl w-full h-14 flex items-center justify-center shadow-sm hover:scale-105 hover:shadow-md transition duration-300">
+                    <div class="bg-white p-3 rounded-xl w-full h-14 flex items-center justify-center shadow-sm md:hover:scale-105 md:hover:shadow-md transition duration-300">
                         <img src="logo04.png" alt="合作機構 Logo 4" class="max-h-full max-w-full object-contain">
                     </div>
                 </div>
@@ -1074,11 +1074,13 @@
 
             catalogSection.style.display = 'none';
             detailSection.classList.remove('hidden');
+            window.scrollTo({ top: detailSection.offsetTop, behavior: 'instant' });
         }
 
         function showCatalog() {
             detailSection.classList.add('hidden');
             catalogSection.style.display = '';
+            window.scrollTo({ top: catalogSection.offsetTop, behavior: 'instant' });
         }
 
         function handleHash() {
