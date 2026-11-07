@@ -4,12 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Waahaa SJ Studio 仕人工作室 | STEAM & Art-Tech 互動科技課程目錄</title>
+    <meta name="description" content="Waahaa SJ Studio 仕人工作室｜為香港學校設計的 STEAM Art-Tech、AI 與傳統工藝課程，設多元課程與單元體驗，可配合學校活動靈活安排。">
+    <meta name="theme-color" content="#0c0a09">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='14'%20fill='%230c0a09'/%3E%3Ctext%20x='32'%20y='46'%20text-anchor='middle'%20font-family='Georgia,serif'%20font-style='italic'%20font-weight='bold'%20font-size='34'%20fill='%23ffffff'%3EWJ%3C/text%3E%3C/svg%3E">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Waahaa SJ Studio 仕人工作室">
+    <meta property="og:locale" content="zh_HK">
+    <meta property="og:title" content="Waahaa SJ Studio｜STEAM & Art-Tech 互動科技課程">
+    <meta property="og:description" content="為香港學校而設的多元課程：TouchDesigner 互動藝術、ComfyUI 生成式 AI、身體光繪、AI 網頁與平面設計、展覽策展生涯規劃、紅銅金工與非遺工藝。">
+    <meta property="og:url" content="https://waahaa-sj.github.io/steam/">
+    <meta property="og:image" content="https://waahaa-sj.github.io/steam/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+
     <!-- 引入 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- 引入 Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         html { scroll-behavior: smooth; }
+        /* 錨點跳轉時避開 sticky 導覽列（--nav-h 由 JS 依實際高度寫入） */
+        section[id] { scroll-margin-top: calc(var(--nav-h, 65px) + 12px); }
         /* 3D 行雲流水水墨畫布 */
         #canvas-container {
             position: absolute;
@@ -121,7 +137,7 @@
                 <span class="bg-gradient-to-r from-gray-900 via-gray-700 to-gray-800 bg-clip-text text-transparent">STEAM Art-Tech、AI 與金工工藝課程</span>
             </h1>
             <p class="text-base md:text-lg text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed font-medium">
-                專為香港學校及大專院校設計。結合專業網頁互動、即時視覺演算與生成式 AI，引導學生親手創作出沉浸式藝術作品；另設金工與首飾工藝工作坊，於傳統工藝中培養專注與匠心，對接未來 AI 與藝術融合的趨勢。
+                專為香港學校設計。結合專業網頁互動、即時視覺演算與生成式 AI，引導學生親手創作出沉浸式藝術作品；另設金工與首飾工藝工作坊，於傳統工藝中培養專注與匠心，對接未來 AI 與藝術融合的趨勢。
             </p>
             <a href="#catalog" class="bg-black text-white font-bold px-8 py-3 rounded-xl shadow-xl shadow-gray-900/10 hover:bg-gray-800 transition transform hover:-translate-y-0.5 inline-block border border-black">
                 瀏覽課程及工作坊
@@ -178,13 +194,11 @@
                         <p class="text-sm font-semibold italic text-gray-500 mb-6">「不用寫代碼，用邏輯與美感操控光影」</p>
                         
                         <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
-                            <p><strong class="text-stone-900">建議人數：</strong>10 - 35 人</p>
-                            <p><strong class="text-stone-900">適合對象：</strong>中學生｜成人</p>
-                            <p><strong class="text-stone-900">每堂時長：</strong>1 - 1.5 小時</p>
-                            <p><strong class="text-stone-900">課程內容：</strong>使用業界即時視覺軟體，教導學生使用「節點」代替繁瑣程式碼，探索 Art-Tech 的無限可行性。</p>
-                            <p><strong class="text-stone-900">課程重點：</strong>深度結合STEAM教育，引導學生將數字轉化為動態藝術，並融入傳統中華文化意象。</p>
-                            <p><strong class="text-stone-900">預期收穫：</strong>掌握即時互動藝術與 AI 軟件的實際應用，親手打造出屬於自己的沉浸式展覽。最後一堂將會為學生舉辦一個小型沉浸式展覽。</p>
-                        </div>
+                        <p><strong class="text-stone-900">建議人數：</strong>10 - 35 人</p>
+                        <p><strong class="text-stone-900">適合對象：</strong>中學生｜成人</p>
+                        <p><strong class="text-stone-900">每堂時長：</strong>1 - 1.5 小時</p>
+                        <p><strong class="text-stone-900">課程內容：</strong>六堂由節點入門到小型沉浸式展覽，完成自己的互動作品。</p>
+                    </div>
                     </div>
                     <div class="px-8 pb-8">
                         <img src="image01.jpg" alt="Art-Tech 互動藝術課(TouchDesigner)課程相片" class="w-full aspect-video object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
@@ -208,16 +222,14 @@
                         <p class="text-sm font-semibold italic text-gray-500 mb-6">「掌控 AI，學會生成式創作」</p>
                         
                         <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
-                            <p><strong class="text-stone-900">建議人數：</strong>10 - 35 人</p>
-                            <p><strong class="text-stone-900">適合對象：</strong>中學生｜成人</p>
-                            <p><strong class="text-stone-900">每堂時長：</strong>1 - 1.5 小時</p>
-                            <p><strong class="text-stone-900">課程內容：</strong>雲端平台運行，免卻學校電腦硬件配置限制。專注教授 AI 的工作流邏輯。</p>
-                            <p><strong class="text-stone-900">課程重點：</strong>學習精準度的提示詞（Prompts）與邏輯架構，並融合傳統美學與現代藝術（如水墨擴散、國潮視覺）</p>
-                            <p><strong class="text-stone-900">預期收穫：</strong>由淺入深，學會從純文字生成品質插畫，到親手製作出細緻流暢的動態 AI 動畫短片。</p>
-                        </div>
+                        <p><strong class="text-stone-900">建議人數：</strong>10 - 35 人</p>
+                        <p><strong class="text-stone-900">適合對象：</strong>中學生｜成人</p>
+                        <p><strong class="text-stone-900">每堂時長：</strong>1 - 1.5 小時</p>
+                        <p><strong class="text-stone-900">課程內容：</strong>六堂由提示詞、工作流到 AI 動畫短片，完成可播放作品。</p>
+                    </div>
                     </div>
                     <div class="px-8 pb-8">
-                        <img src="image02.jpg" alt="生成式 AI 影像課程" class="w-full aspect-video object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                        <img loading="lazy" decoding="async" src="image02.jpg" alt="生成式 AI 影像課程" class="w-full aspect-video object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
                     </div>
                     <div class="px-8 pb-6">
                         <span class="text-sm font-bold text-stone-900 inline-flex items-center gap-1 border-b-2 border-stone-900 pb-0.5">查看詳細流程 <span aria-hidden="true">→</span></span>
@@ -237,16 +249,14 @@
                         <p class="text-sm font-semibold italic text-gray-500 mb-6">「身體即畫筆，揮手成光痕」</p>
                         
                         <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
-                            <p><strong class="text-stone-900">建議人數：</strong>10 - 35 人</p>
-                            <p><strong class="text-stone-900">適合對象：</strong>中學生｜成人</p>
-                            <p><strong class="text-stone-900">課堂時長：</strong>1.5 小時 (單元體驗)</p>
-                            <p><strong class="text-stone-900">課程內容：</strong>單元體驗。學生站在投影幕前，揮動手臂、轉身、踏步——身體就是畫筆，即時在幕上留下閃亮粒子光痕，像揮動魔杖一樣。</p>
-                            <p><strong class="text-stone-900">課程重點：</strong>零基礎、高參與度。不用觸控筆，全身動起來，即時看到自己的光痕作品，適合拍照打卡。</p>
-                            <p><strong class="text-stone-900">預期收穫：</strong>解構並認識 Art-Tech 的實際應用，啟發對Art-Tech與AI藝術、數碼設計與未來創意藝術的濃厚興趣。</p>
-                        </div>
+                        <p><strong class="text-stone-900">建議人數：</strong>10 - 35 人</p>
+                        <p><strong class="text-stone-900">適合對象：</strong>中學生｜成人</p>
+                        <p><strong class="text-stone-900">課堂時長：</strong>1.5 小時 (單元體驗)</p>
+                        <p><strong class="text-stone-900">課程內容：</strong>零基礎、全身參與，一節課內完成自己的光繪畫面。</p>
+                    </div>
                     </div>
                     <div class="px-8 pb-8">
-                        <img src="image03.jpg" alt="Art-Tech 工作坊相片" class="w-full aspect-video object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                        <img loading="lazy" decoding="async" src="image03.jpg" alt="Art-Tech 工作坊相片" class="w-full aspect-video object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
                     </div>
                     <div class="px-8 pb-6">
                         <span class="text-sm font-bold text-stone-900 inline-flex items-center gap-1 border-b-2 border-stone-900 pb-0.5">查看詳細流程 <span aria-hidden="true">→</span></span>
@@ -267,16 +277,14 @@
                         <p class="text-sm font-semibold italic text-gray-500 mb-6">「使用 Gemini 快速創作你的互動藝術」</p>
                         
                         <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
-                            <p><strong class="text-stone-900">建議人數：</strong>10 - 35 人</p>
-                            <p><strong class="text-stone-900">適合對象：</strong>中學生｜成人</p>
-                            <p><strong class="text-stone-900">課堂時長：</strong>1.5 小時 (單元體驗)</p>
-                            <p><strong class="text-stone-900">課程內容：</strong> 透過具趣味性的實驗與互動藝術，將深奧的互動藝術概念，使用 AI 轉化成學生能即學即用的創意思維工具。</p>
-                            <p><strong class="text-stone-900">課程重點：</strong>打破常規！證明 AI 不只是單純文字和圖像工具，學生更可以將 AI 與視覺硬體聯動，好玩、易上手且充滿成就感。</p>
-                            <p><strong class="text-stone-900">預期收穫：</strong>學會與生成式 AI 進行深度精準對話的思考方式；全面啟發 AI 邏輯思維，將 AI 化為理想的工具。</p>
-                        </div>
+                        <p><strong class="text-stone-900">建議人數：</strong>10 - 35 人</p>
+                        <p><strong class="text-stone-900">適合對象：</strong>中學生｜成人</p>
+                        <p><strong class="text-stone-900">課堂時長：</strong>1.5 小時 (單元體驗)</p>
+                        <p><strong class="text-stone-900">課程內容：</strong>AI 與視覺硬件聯動，把抽象概念變成可玩的互動裝置。</p>
+                    </div>
                     </div>
                     <div class="px-8 pb-8">
-                        <img src="image04.jpg" alt="AI 工作坊相片" class="w-full aspect-video object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                        <img loading="lazy" decoding="async" src="image04.jpg" alt="AI 工作坊相片" class="w-full aspect-video object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
                     </div>
                     <div class="px-8 pb-6">
                         <span class="text-sm font-bold text-stone-900 inline-flex items-center gap-1 border-b-2 border-stone-900 pb-0.5">查看詳細流程 <span aria-hidden="true">→</span></span>
@@ -296,16 +304,14 @@
                         <p class="text-sm font-semibold italic text-gray-500 mb-6">「用 AI 當作最強工具，毋須基礎寫出專屬網頁」</p>
                         
                         <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
-                            <p><strong class="text-stone-900">建議人數：</strong>10 - 35 人</p>
-                            <p><strong class="text-stone-900">適合對象：</strong>中學生｜成人</p>
-                            <p><strong class="text-stone-900">課程時長：</strong>1.5 - 2 小時</p>
-                            <p><strong class="text-stone-900">課程內容：</strong>教授學生如何利用大型語言模型（LLM）輔助編程，一步步引導 AI 寫出 HTML、CSS 與 JavaScript 程式碼。</p>
-                            <p><strong class="text-stone-900">課程重點：</strong>著重於「指令工程（Prompt Engineering）」與邏輯拆解，引導學生將天馬行空的創意轉化為清晰的網頁架構與動態互動。</p>
-                            <p><strong class="text-stone-900">預期收穫：</strong>學生可以即堂架構到一個網站，避免繁複的coding，在 AI 協助下架設出個人作品或動態特效網頁，並能部署至 GitHub Pages 即時分享。</p>
-                        </div>
+                        <p><strong class="text-stone-900">建議人數：</strong>10 - 35 人</p>
+                        <p><strong class="text-stone-900">適合對象：</strong>中學生｜成人</p>
+                        <p><strong class="text-stone-900">課堂時長：</strong>1.5 - 2 小時</p>
+                        <p><strong class="text-stone-900">課程內容：</strong>一節課用 AI 寫出互動網頁，並即時部署上網分享。</p>
+                    </div>
                     </div>
                     <div class="px-8 pb-8">
-                        <img src="image05.jpg" alt="AI 網頁生成圖片" class="w-full aspect-video object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                        <img loading="lazy" decoding="async" src="image05.jpg" alt="AI 網頁生成圖片" class="w-full aspect-video object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
                     </div>
                     <div class="px-8 pb-6">
                         <span class="text-sm font-bold text-stone-900 inline-flex items-center gap-1 border-b-2 border-stone-900 pb-0.5">查看詳細流程 <span aria-hidden="true">→</span></span>
@@ -325,16 +331,14 @@
                         <p class="text-sm font-semibold italic text-gray-500 mb-6">「用 AI 生成工具，快速做出專業平面設計」</p>
 
                         <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
-                            <p><strong class="text-stone-900">建議人數：</strong>10 - 35 人</p>
-                            <p><strong class="text-stone-900">適合對象：</strong>中學生｜成人</p>
-                            <p><strong class="text-stone-900">課程時長：</strong>1.5 - 2 小時</p>
-                            <p><strong class="text-stone-900">課程內容：</strong>運用 AI 圖像生成工具，教授學生由概念到成品完成平面設計，包括海報、宣傳單張與社交媒體圖文，掌握 AI 輔助設計的完整工作流。</p>
-                            <p><strong class="text-stone-900">課程重點：</strong>精準的設計提示詞（Prompt）與風格控制，讓 AI 成為最強設計助手。</p>
-                            <p><strong class="text-stone-900">預期收穫：</strong>親手完成一套可用於宣傳的平面設計作品。</p>
-                        </div>
+                        <p><strong class="text-stone-900">建議人數：</strong>10 - 35 人</p>
+                        <p><strong class="text-stone-900">適合對象：</strong>中學生｜成人</p>
+                        <p><strong class="text-stone-900">課堂時長：</strong>1.5 - 2 小時</p>
+                        <p><strong class="text-stone-900">課程內容：</strong>由商業案例到成品，完成一套可用於宣傳的海報與圖文。</p>
+                    </div>
                     </div>
                     <div class="px-8 pb-8">
-                        <img src="image06.jpg" alt="AI 平面設計課相片" class="w-full aspect-video object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                        <img loading="lazy" decoding="async" src="image06.jpg" alt="AI 平面設計課相片" class="w-full aspect-video object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
                     </div>
                     <div class="px-8 pb-6">
                         <span class="text-sm font-bold text-stone-900 inline-flex items-center gap-1 border-b-2 border-stone-900 pb-0.5">查看詳細流程 <span aria-hidden="true">→</span></span>
@@ -354,15 +358,14 @@
                         <p class="text-sm font-semibold italic text-gray-500 mb-6">「走進博物館與畫展，啟發策展生涯」</p>
 
                         <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
-                            <p><strong class="text-stone-900">建議人數：</strong>10 - 35 人</p>
-                            <p><strong class="text-stone-900">適合對象：</strong>中學生｜成人</p>
-                            <p><strong class="text-stone-900">課程時長：</strong>1.5 小時</p>
-                            <p><strong class="text-stone-900">課程內容：</strong>以博物館、美術館及畫展等文化藝術展覽為例（不是會展式的商業展銷，例如電腦節、旅遊展、展銷會），介紹策展人的工作：構思主題、挑選展品、編排動線、佈展與宣傳。並以「小小策展人」遊戲讓學生親身體驗，最後分享自己的展覽方案。</p>
-                            <p><strong class="text-stone-900">預期收穫：</strong>認識博物館與畫展策展行業，了解 AI 與 Art-Tech 如何應用於展覽呈現，啟發藝術行政與文化管理方向的生涯規劃。</p>
-                        </div>
+                        <p><strong class="text-stone-900">建議人數：</strong>10 - 35 人</p>
+                        <p><strong class="text-stone-900">適合對象：</strong>中學生｜成人</p>
+                        <p><strong class="text-stone-900">課堂時長：</strong>1.5 小時</p>
+                        <p><strong class="text-stone-900">課程內容：</strong>分組抽卡設計展覽方案，認識 AI／Art-Tech 展覽應用。</p>
+                    </div>
                     </div>
                     <div class="px-8 pb-8">
-                        <img src="image07.jpg" alt="展覽策展現場相片" class="w-full aspect-video object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                        <img loading="lazy" decoding="async" src="image07.jpg" alt="展覽策展現場相片" class="w-full aspect-video object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
                     </div>
                     <div class="px-8 pb-6">
                         <span class="text-sm font-bold text-stone-900 inline-flex items-center gap-1 border-b-2 border-stone-900 pb-0.5">查看詳細流程 <span aria-hidden="true">→</span></span>
@@ -382,16 +385,14 @@
                         <p class="text-sm font-semibold italic text-gray-500 mb-6">「從一片紅銅開始，親手打造專屬首飾」</p>
 
                         <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
-                            <p><strong class="text-stone-900">建議人數：</strong>10 - 30 人</p>
-                            <p><strong class="text-stone-900">適合對象：</strong>中學生｜成人</p>
-                            <p><strong class="text-stone-900">課程時長：</strong>1 - 1.5 小時</p>
-                            <p><strong class="text-stone-900">課程內容：</strong>從一片樸實的紅銅片開始，透過雙手與工具，體驗完整金工創作流程，親手將金屬原材料製作成專屬戒指、手鐲。</p>
-                            <p><strong class="text-stone-900">製作工序：</strong>紋理鍛敲 → 塑形彎折 → 精細修磨</p>
-                            <p><strong class="text-stone-900">預期收穫：</strong>完成一件專屬的金屬首飾，體驗由原材料到成品的完整金工創作流程。</p>
-                        </div>
+                        <p><strong class="text-stone-900">建議人數：</strong>10 - 30 人</p>
+                        <p><strong class="text-stone-900">適合對象：</strong>中學生｜成人</p>
+                        <p><strong class="text-stone-900">課堂時長：</strong>1 - 1.5 小時</p>
+                        <p><strong class="text-stone-900">課程內容：</strong>鍛敲、彎折、修磨，一節課完成專屬戒指或手鐲。</p>
+                    </div>
                     </div>
                     <div class="px-8 pb-8">
-                        <img src="image08.jpg" alt="紅銅開口戒指/手鐲 工作坊相片" class="w-full aspect-video object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                        <img loading="lazy" decoding="async" src="image08.jpg" alt="紅銅開口戒指/手鐲 工作坊相片" class="w-full aspect-video object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
                     </div>
                     <div class="px-8 pb-6">
                         <span class="text-sm font-bold text-stone-900 inline-flex items-center gap-1 border-b-2 border-stone-900 pb-0.5">查看詳細流程 <span aria-hidden="true">→</span></span>
@@ -411,16 +412,14 @@
                         <p class="text-sm font-semibold italic text-gray-500 mb-6">「認識金屬的化學之美，科學與藝術的結合」</p>
 
                         <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
-                            <p><strong class="text-stone-900">建議人數：</strong>10 - 30 人</p>
-                            <p><strong class="text-stone-900">適合對象：</strong>中學生｜成人</p>
-                            <p><strong class="text-stone-900">課程時長：</strong>1 - 1.5 小時</p>
-                            <p><strong class="text-stone-900">課程內容：</strong>認識金屬氧化與銅染化學原理，學習使用安全染劑及抗蝕繪圖技法，跨學科結合「科學（STEAM）」與「藝術創作」，啟發創意思維。</p>
-                            <p><strong class="text-stone-900">製作工序：</strong>化學美學 → 圖案繪製 → 封層保護</p>
-                            <p><strong class="text-stone-900">預期收穫：</strong>完成一件復古銅染工藝擺設，同時理解金屬化學原理與藝術創作的結合。</p>
-                        </div>
+                        <p><strong class="text-stone-900">建議人數：</strong>10 - 30 人</p>
+                        <p><strong class="text-stone-900">適合對象：</strong>中學生｜成人</p>
+                        <p><strong class="text-stone-900">課堂時長：</strong>1 - 1.5 小時</p>
+                        <p><strong class="text-stone-900">課程內容：</strong>安全染劑配合抗蝕繪圖，完成復古銅染擺設。</p>
+                    </div>
                     </div>
                     <div class="px-8 pb-8">
-                        <img src="image09.jpg" alt="復古銅染工藝擺設課程相片" class="w-full aspect-video object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                        <img loading="lazy" decoding="async" src="image09.jpg" alt="復古銅染工藝擺設課程相片" class="w-full aspect-video object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
                     </div>
                     <div class="px-8 pb-6">
                         <span class="text-sm font-bold text-stone-900 inline-flex items-center gap-1 border-b-2 border-stone-900 pb-0.5">查看詳細流程 <span aria-hidden="true">→</span></span>
@@ -440,16 +439,14 @@
                         <p class="text-sm font-semibold italic text-gray-500 mb-6">「深入金工核心技術，完成個人首飾系列」</p>
 
                         <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
-                            <p><strong class="text-stone-900">建議人數：</strong>10 - 30 人</p>
-                            <p><strong class="text-stone-900">適合對象：</strong>中學生｜成人</p>
-                            <p><strong class="text-stone-900">課程時長：</strong>1 - 1.5 小時</p>
-                            <p><strong class="text-stone-900">課程內容：</strong>深度掌握鋸切、焊接等核心金工技術，學習將設計草圖轉化為實體首飾系列，全面提升設計思維、解難能力與工藝匠心。</p>
-                            <p><strong class="text-stone-900">製作工序：</strong>基礎工具與安全 → 設計轉化 → 完成個人首飾系列</p>
-                            <p><strong class="text-stone-900">預期收穫：</strong>完成一組 3 至 5 件的個人首飾系列，掌握完整金工創作流程。</p>
-                        </div>
+                        <p><strong class="text-stone-900">建議人數：</strong>10 - 30 人</p>
+                        <p><strong class="text-stone-900">適合對象：</strong>中學生｜成人</p>
+                        <p><strong class="text-stone-900">課堂時長：</strong>1 - 1.5 小時</p>
+                        <p><strong class="text-stone-900">課程內容：</strong>鋸切、焊接與設計轉化，完成 3 至 5 件個人系列。</p>
+                    </div>
                     </div>
                     <div class="px-8 pb-8">
-                        <img src="image10.jpg" alt="金工長期班課程相片" class="w-full aspect-video object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                        <img loading="lazy" decoding="async" src="image10.jpg" alt="金工長期班課程相片" class="w-full aspect-video object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
                     </div>
                     <div class="px-8 pb-6">
                         <span class="text-sm font-bold text-stone-900 inline-flex items-center gap-1 border-b-2 border-stone-900 pb-0.5">查看詳細流程 <span aria-hidden="true">→</span></span>
@@ -469,16 +466,14 @@
                         <p class="text-sm font-semibold italic text-gray-500 mb-6">「在錫紙上鍛敲出立體浮雕畫」</p>
 
                         <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
-                            <p><strong class="text-stone-900">建議人數：</strong>10 - 30 人</p>
-                            <p><strong class="text-stone-900">適合對象：</strong>中學生｜成人</p>
-                            <p><strong class="text-stone-900">課程時長：</strong>1 - 1.5 小時</p>
-                            <p><strong class="text-stone-900">課程內容：</strong>認識中國傳統錾刻歷史，學習於柔韌厚錫紙上進行正反按壓技法，將平面圖案轉化為立體生動的浮雕畫，鍛鍊手部精細動作。</p>
-                            <p><strong class="text-stone-900">製作工序：</strong>工藝歷史 → 圖案描摹 → 按壓技法 → 作品裝框</p>
-                            <p><strong class="text-stone-900">預期收穫：</strong>完成一幅裝裱的立體浮雕錫紙畫，認識中國傳統錾刻工藝。</p>
-                        </div>
+                        <p><strong class="text-stone-900">建議人數：</strong>10 - 30 人</p>
+                        <p><strong class="text-stone-900">適合對象：</strong>中學生｜成人</p>
+                        <p><strong class="text-stone-900">課堂時長：</strong>1 - 1.5 小時</p>
+                        <p><strong class="text-stone-900">課程內容：</strong>以正反按壓技法做出浮雕，完成裝框作品。</p>
+                    </div>
                     </div>
                     <div class="px-8 pb-8">
-                        <img src="image11.jpg" alt="傳統錾刻錫紙畫工作坊相片" class="w-full aspect-video object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                        <img loading="lazy" decoding="async" src="image11.jpg" alt="傳統錾刻錫紙畫工作坊相片" class="w-full aspect-video object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
                     </div>
                     <div class="px-8 pb-6">
                         <span class="text-sm font-bold text-stone-900 inline-flex items-center gap-1 border-b-2 border-stone-900 pb-0.5">查看詳細流程 <span aria-hidden="true">→</span></span>
@@ -498,16 +493,14 @@
                         <p class="text-sm font-semibold italic text-gray-500 mb-6">「親身體驗貼金工藝，顯現書法之美」</p>
 
                         <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
-                            <p><strong class="text-stone-900">建議人數：</strong>10 - 30 人</p>
-                            <p><strong class="text-stone-900">適合對象：</strong>中學生｜成人</p>
-                            <p><strong class="text-stone-900">課程時長：</strong>1 - 1.5 小時</p>
-                            <p><strong class="text-stone-900">課程內容：</strong>賞析傳統貼金歷史，透過安全簡便的步驟學習構圖、鋪展金箔與掃金顯圖技法，親身體驗頂級裝飾工藝，培養對中華文化的興趣。</p>
-                            <p><strong class="text-stone-900">製作工序：</strong>工藝典故 → 構圖設計 → 貼金覆箔 → 掃金顯圖</p>
-                            <p><strong class="text-stone-900">預期收穫：</strong>完成一幅金箔書法拓印作品，認識中國貼金工藝與書法之美。</p>
-                        </div>
+                        <p><strong class="text-stone-900">建議人數：</strong>10 - 30 人</p>
+                        <p><strong class="text-stone-900">適合對象：</strong>中學生｜成人</p>
+                        <p><strong class="text-stone-900">課堂時長：</strong>1 - 1.5 小時</p>
+                        <p><strong class="text-stone-900">課程內容：</strong>鋪箔、掃金顯圖，完成一幅金箔書法拓印。</p>
+                    </div>
                     </div>
                     <div class="px-8 pb-8">
-                        <img src="image12.jpg" alt="非遺金箔書法拓印工作坊相片" class="w-full aspect-video object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                        <img loading="lazy" decoding="async" src="image12.jpg" alt="非遺金箔書法拓印工作坊相片" class="w-full aspect-video object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
                     </div>
                     <div class="px-8 pb-6">
                         <span class="text-sm font-bold text-stone-900 inline-flex items-center gap-1 border-b-2 border-stone-900 pb-0.5">查看詳細流程 <span aria-hidden="true">→</span></span>
@@ -527,16 +520,14 @@
                         <p class="text-sm font-semibold italic text-gray-500 mb-6">「以幻彩貝殼拼貼出精美手鏈」</p>
 
                         <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
-                            <p><strong class="text-stone-900">建議人數：</strong>10 - 30 人</p>
-                            <p><strong class="text-stone-900">適合對象：</strong>中學生｜成人</p>
-                            <p><strong class="text-stone-900">課程時長：</strong>1 - 1.5 小時</p>
-                            <p><strong class="text-stone-900">課程內容：</strong>認識中國傳統螺鈿（貝殼鑲嵌）工藝，學習挑選及拼貼幻彩貝殼片，結合現代安全封層技術製作精美手鏈，培養色彩搭配與藝術美感。</p>
-                            <p><strong class="text-stone-900">製作工序：</strong>工藝歷史 → 構圖拼貼 → 封層處理</p>
-                            <p><strong class="text-stone-900">預期收穫：</strong>完成一條精美螺鈿手鏈，認識傳統貝殼鑲嵌工藝與色彩美學。</p>
-                        </div>
+                        <p><strong class="text-stone-900">建議人數：</strong>10 - 30 人</p>
+                        <p><strong class="text-stone-900">適合對象：</strong>中學生｜成人</p>
+                        <p><strong class="text-stone-900">課堂時長：</strong>1 - 1.5 小時</p>
+                        <p><strong class="text-stone-900">課程內容：</strong>挑選貝殼片拼貼、封層，完成一條螺鈿手鏈。</p>
+                    </div>
                     </div>
                     <div class="px-8 pb-8">
-                        <img src="image13.jpg" alt="非遺螺鈿手鏈工作坊相片" class="w-full aspect-video object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                        <img loading="lazy" decoding="async" src="image13.jpg" alt="非遺螺鈿手鏈工作坊相片" class="w-full aspect-video object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
                     </div>
                     <div class="px-8 pb-6">
                         <span class="text-sm font-bold text-stone-900 inline-flex items-center gap-1 border-b-2 border-stone-900 pb-0.5">查看詳細流程 <span aria-hidden="true">→</span></span>
@@ -556,16 +547,14 @@
                         <p class="text-sm font-semibold italic text-gray-500 mb-6">「走進珠寶行業，啟發生涯規劃」</p>
 
                         <div class="space-y-3 border-t border-gray-100 pt-4 text-sm font-medium text-gray-600">
-                            <p><strong class="text-stone-900">建議人數：</strong>10 - 30 人</p>
-                            <p><strong class="text-stone-900">適合對象：</strong>中學生｜成人</p>
-                            <p><strong class="text-stone-900">課程時長：</strong>1 - 1.5 小時</p>
-                            <p><strong class="text-stone-900">課程內容：</strong>學生將實地參訪本地珠寶品牌並與業界人士交流，了解珠寶設計與商業營運的真實環境，從中拓闊視野並啟發未來的生涯規劃方向。</p>
-                            <p><strong class="text-stone-900">課程組成：</strong>企業參訪與實地觀察 + 業界人士分享講座</p>
-                            <p><strong class="text-stone-900">預期收穫：</strong>接觸真實職場工作者，提早了解珠寶行業前景，啟發生涯規劃方向。</p>
-                        </div>
+                        <p><strong class="text-stone-900">建議人數：</strong>10 - 30 人</p>
+                        <p><strong class="text-stone-900">適合對象：</strong>中學生｜成人</p>
+                        <p><strong class="text-stone-900">課堂時長：</strong>1 - 1.5 小時</p>
+                        <p><strong class="text-stone-900">課程內容：</strong>實地參訪珠寶品牌、與業界交流，了解入行條件。</p>
+                    </div>
                     </div>
                     <div class="px-8 pb-8">
-                        <img src="image14.jpg" alt="生涯規劃與職涯探索系列相片" class="w-full aspect-video object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
+                        <img loading="lazy" decoding="async" src="image14.jpg" alt="生涯規劃與職涯探索系列相片" class="w-full aspect-video object-cover rounded-xl border border-gray-100 shadow-sm bg-gray-100">
                     </div>
                     <div class="px-8 pb-6">
                         <span class="text-sm font-bold text-stone-900 inline-flex items-center gap-1 border-b-2 border-stone-900 pb-0.5">查看詳細流程 <span aria-hidden="true">→</span></span>
@@ -600,13 +589,13 @@
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 items-stretch">
                 <figure class="rounded-2xl overflow-hidden shadow-sm border border-gray-100 group">
-                    <img src="imagev01.jpg" alt="活動花絮" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+                    <img loading="lazy" decoding="async" src="imagev01.jpg" alt="活動花絮" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
                 </figure>
                 <figure class="rounded-2xl overflow-hidden shadow-sm border border-gray-100 group">
-                    <img src="imagev02.jpg" alt="活動花絮" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+                    <img loading="lazy" decoding="async" src="imagev02.jpg" alt="活動花絮" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
                 </figure>
                 <figure class="rounded-2xl overflow-hidden shadow-sm border border-gray-100 group">
-                    <img src="imagev03.jpg" alt="活動花絮" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+                    <img loading="lazy" decoding="async" src="imagev03.jpg" alt="活動花絮" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
                 </figure>
             </div>
         </div>
@@ -667,17 +656,17 @@
             
             <!-- Logo 容器：手機版每行 2 個、電腦版每行 4 個，四格同一高度確保視覺平衡 -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 items-center justify-items-center max-w-xl mx-auto">
-                <div class="bg-white p-2 rounded-xl w-full min-w-0 overflow-hidden h-20 md:h-24 flex items-center justify-center shadow-sm md:hover:scale-105 md:hover:shadow-md transition duration-300">
-                    <img src="logo01.png" alt="VTC" class="w-full h-full object-contain">
+                <div class="bg-white p-2 rounded-xl w-full min-w-0 overflow-hidden h-24 md:h-28 flex items-center justify-center shadow-sm md:hover:scale-105 md:hover:shadow-md transition duration-300">
+                    <img loading="lazy" decoding="async" src="logo01.png" alt="VTC" class="w-full h-full object-contain">
                 </div>
-                <div class="bg-white p-2 rounded-xl w-full min-w-0 overflow-hidden h-20 md:h-24 flex items-center justify-center shadow-sm md:hover:scale-105 md:hover:shadow-md transition duration-300">
-                    <img src="logo02.png" alt="BE@RBRICK MACAU" class="w-full h-full object-contain">
+                <div class="bg-white p-2 rounded-xl w-full min-w-0 overflow-hidden h-24 md:h-28 flex items-center justify-center shadow-sm md:hover:scale-105 md:hover:shadow-md transition duration-300">
+                    <img loading="lazy" decoding="async" src="logo02.png" alt="BE@RBRICK MACAU" class="w-full h-full object-contain">
                 </div>
-                <div class="bg-white p-2 rounded-xl w-full min-w-0 overflow-hidden h-20 md:h-24 flex items-center justify-center shadow-sm md:hover:scale-105 md:hover:shadow-md transition duration-300">
-                    <img src="logo03.png" alt="連青·南昌" class="w-full h-full object-contain">
+                <div class="bg-white p-2 rounded-xl w-full min-w-0 overflow-hidden h-24 md:h-28 flex items-center justify-center shadow-sm md:hover:scale-105 md:hover:shadow-md transition duration-300">
+                    <img loading="lazy" decoding="async" src="logo03.png" alt="連青·南昌" class="w-full h-full object-contain">
                 </div>
-                <div class="bg-white p-2 rounded-xl w-full min-w-0 overflow-hidden h-20 md:h-24 flex items-center justify-center shadow-sm md:hover:scale-105 md:hover:shadow-md transition duration-300">
-                    <img src="logo04.png" alt="THE PURE LAND ASSEMBLY 淨土薈" class="w-full h-full object-contain">
+                <div class="bg-white p-2 rounded-xl w-full min-w-0 overflow-hidden h-24 md:h-28 flex items-center justify-center shadow-sm md:hover:scale-105 md:hover:shadow-md transition duration-300">
+                    <img loading="lazy" decoding="async" src="logo04.png" alt="THE PURE LAND ASSEMBLY 淨土薈" class="w-full h-full object-contain">
                 </div>
             </div>
         </div>
@@ -1076,6 +1065,46 @@
         const detailContent = document.getElementById('detail-content');
         const detailBack = document.getElementById('detail-back');
 
+        // 把 sticky 導覽列實際高度寫進 CSS 變數，供 section[id] 的 scroll-margin-top 使用
+        function syncNavHeight() {
+            const navEl = document.querySelector('nav');
+            document.documentElement.style.setProperty('--nav-h', (navEl ? navEl.offsetHeight : 65) + 'px');
+        }
+        syncNavHeight();
+        window.addEventListener('resize', syncNavHeight);
+        window.addEventListener('load', syncNavHeight);
+
+        // ===== 統一的「滾到區塊頂部」邏輯 =====
+        // 1. 用 scrollIntoView（不受 offsetParent 影響，落點穩定）
+        // 2. 動態量度 sticky 導覽列高度，扣掉後才對齊，避免頂部被導覽列遮住
+        let scrollToken = 0;
+        function alignToTop(el) {
+            if (!el) return;
+            const token = ++scrollToken;
+            const navEl = document.querySelector('nav');
+            const navH = navEl ? navEl.offsetHeight : 0;
+            el.style.scrollMarginTop = (navH + 12) + 'px';
+
+            const align = () => el.scrollIntoView({ block: 'start', behavior: 'instant' });
+
+            // 先立即對齊一次，避免肉眼看到從舊位置跳過去
+            align();
+
+            // 等兩幀：視圖切換／版面重排完成後再對齊一次
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+                if (token !== scrollToken) return;
+                align();
+
+                // 相片／iframe 載入後如版面再變，補一次校正
+                // 但只在使用者未自行滾動時才校正，避免扯走他
+                const y0 = window.scrollY;
+                setTimeout(() => {
+                    if (token !== scrollToken) return;
+                    if (Math.abs(window.scrollY - y0) < 4) align();
+                }, 350);
+            }));
+        }
+
         function renderDetail(id) {
             const d = courseDetails[id];
             if (!d) return;
@@ -1143,30 +1172,45 @@
 
             catalogSection.style.display = 'none';
             detailSection.classList.remove('hidden');
-            window.scrollTo({ top: detailSection.offsetTop, behavior: 'instant' });
+            alignToTop(detailSection);
         }
 
-        function showCatalog() {
+        function showCatalog(shouldScroll) {
             detailSection.classList.add('hidden');
             catalogSection.style.display = '';
-            window.scrollTo({ top: catalogSection.offsetTop, behavior: 'instant' });
+            // 只有在「由課程詳細頁返回目錄」時才強制對齊，
+            // 首次載入／重新整理時不動畫面，讓訪客看到 Hero
+            if (shouldScroll) alignToTop(catalogSection);
         }
 
-        function handleHash() {
+        function handleHash(isInitial) {
             const m = location.hash.match(/^#course\/(\d+)/);
             if (m && courseDetails[m[1]]) {
                 renderDetail(m[1]);
-            } else {
-                showCatalog();
+                return;
             }
+            // 非課程 hash（#about / #contact / #gallery / #catalog / 空）：
+            // 切回目錄視圖，但不要搶走瀏覽器原生的錨點滾動。
+            // 首次載入不動畫面（讓訪客看到 Hero）；其餘情況用 alignToTop 對齊目標區塊，
+            // 避免「點關於我們卻跳到課程目錄」，也避免 sticky 導覽列遮住標題。
+            const wasDetail = !detailSection.classList.contains('hidden');
+            showCatalog(false);
+            if (isInitial && !wasDetail) return;
+            const id = location.hash.slice(1);
+            const target = id ? document.getElementById(id) : null;
+            alignToTop(target || catalogSection);
         }
 
         detailBack.addEventListener('click', () => {
             location.hash = '#catalog';
         });
 
-        window.addEventListener('hashchange', handleHash);
-        handleHash();
+        window.addEventListener('hashchange', () => handleHash(false));
+
+        // 關掉瀏覽器的自動記憶滾動位置，避免切換課程時被舊位置干擾
+        if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+
+        handleHash(true);
     </script>
 
     <!-- Google Sheet 傳送 JS 邏輯 -->
